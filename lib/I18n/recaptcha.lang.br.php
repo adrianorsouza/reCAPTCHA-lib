@@ -1,12 +1,24 @@
 <?php
 
+/**
+ * reCAPTCHA language file: refer to English translation for list of available language
+ * @version Portuguese - Brazil
+ * By Adriano Rosa dev@adrianorosa.com
+ *
+ * If you want to translate this file to your language that has not already in there feel free to do it,
+ * fork the project do it and send a pull request to that can be available to others users as well.
+ *
+ * Before translate this file to your own languague first check if it has already a Built In reCAPTCHA languages
+ * {@link: https://developers.google.com/recaptcha/docs/customization#i18n}
+ * Although even if it has a Built In language already out there for custom themes it is useful to have this file translated as well.
+ **/
 
-$RECAPTCHA_LANG['instructions_visual'] = 'Digite as palavras acima:';
-$RECAPTCHA_LANG['instructions_audio']  = 'Digite o que você ouve:';
-$RECAPTCHA_LANG['play_again']          = 'Reproduzir som novamente';
-$RECAPTCHA_LANG['cant_hear_this']      = 'Fazer download do som no formato MP3';
-$RECAPTCHA_LANG['visual_challenge']    = 'Obter um CAPTCHA de imagem';
-$RECAPTCHA_LANG['audio_challenge']     = 'Obter um CAPTCHA de áudio';
-$RECAPTCHA_LANG['refresh_btn']         = 'Obter outro CAPTCHA';
-$RECAPTCHA_LANG['help_btn']            = 'Ajuda';
-$RECAPTCHA_LANG['incorrect_try_again'] = 'Incorreto. Tente novamente.';
+$RECAPTCHA_LANG['instructions_visual'] = 'Digite as palavras acima:'; // input label / placeholder for image challenge
+$RECAPTCHA_LANG['instructions_audio']  = 'Digite o que você ouve:'; // input label / placeholder for audio challenge
+$RECAPTCHA_LANG['play_again']          = 'Reproduzir som novamente'; // play captcha sound again
+$RECAPTCHA_LANG['cant_hear_this']      = 'Fazer download do som no formato MP3'; // browset do not support flash
+$RECAPTCHA_LANG['visual_challenge']    = 'Obter um CAPTCHA de imagem'; // captcha image format
+$RECAPTCHA_LANG['audio_challenge']     = 'Obter um CAPTCHA de áudio'; // captcha audio format
+$RECAPTCHA_LANG['refresh_btn']         = 'Obter outro CAPTCHA'; // refresh button
+$RECAPTCHA_LANG['help_btn']            = 'Ajuda'; // help button
+$RECAPTCHA_LANG['incorrect_try_again'] = 'Incorreto. Tente novamente.'; // incorrect input chanllenge

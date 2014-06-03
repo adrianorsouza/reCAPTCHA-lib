@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * reCAPTCHA language file: refer to English translation for list of available language
+ * @version English - US
+ *
+ * If you want to translate this file to your language that has not already in there feel free to do it,
+ * fork the project do it and send a pull request to that can be available to others users as well.
+ *
+ * Before translate this file to your own languague first check if it has already a Built In reCAPTCHA languages
+ * {@link: https://developers.google.com/recaptcha/docs/customization#i18n}
+ * Although even if it has a Built In language already out there for custom themes it is useful to have this file translated as well.
+ **/
 
 
 $RECAPTCHA_LANG['instructions_visual'] = 'Enter the words above:';
