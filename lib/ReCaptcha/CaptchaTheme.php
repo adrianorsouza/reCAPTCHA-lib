@@ -3,7 +3,7 @@
 namespace ReCaptcha;
 
 /**
- * CodeIgniter Wrapper Library for reCAPTCHA API
+ * PHP reCAPTCHA Google's API Wrapper Library for CodeIgniter
  *
  * @date 2014-06-01 01:30
  *
@@ -83,7 +83,7 @@ class CaptchaTheme
          $this->_recaptchaOptions['theme'] = $theme_name;
       }
 
-      // If lang option value is not built in try to set it from a translation file
+      // Whether lang option value is not built in try to set it from a translation file
       if ( isset($this->_recaptchaOptions['lang'])
             && !in_array($this->_recaptchaOptions['lang'], $this->_builtInlang)
             && !isset($this->_recaptchaOptions['custom_translations']) ) {
@@ -100,7 +100,7 @@ class CaptchaTheme
          return;
       }
 
-      // If theme name is on of the Standard_Themes assumed we are using correct name
+      // Whether theme name is on of the Standard_Themes assumed we are using correct name
       if ( in_array($this->_recaptchaOptions['theme'], $this->_standardThemes) ) {
          unset($this->_recaptchaOptions['custom_theme_widget']);
          $js_options = json_encode($this->_recaptchaOptions);
