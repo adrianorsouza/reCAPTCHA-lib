@@ -83,14 +83,14 @@ class CaptchaTheme
          $this->_recaptchaOptions['theme'] = $theme_name;
       }
 
-      // Whether lang option value is not built in try to set it from a translation file
+      // Whether lang option value is not built-in try to set it from a translation file
       if ( isset($this->_recaptchaOptions['lang'])
             && !in_array($this->_recaptchaOptions['lang'], $this->_builtInlang)
             && !isset($this->_recaptchaOptions['custom_translations']) ) {
          $this->setTranslation($this->_recaptchaOptions['lang']);
       }
 
-      // Skip to default reCAPTCHA theme if it's not set or options is not required
+      // Skip to default reCAPTCHA theme if it's not set or options is not defined
       if ( !isset($this->_recaptchaOptions['theme']) && count($this->_recaptchaOptions) == 0 ) {
          return;
       }
@@ -100,7 +100,7 @@ class CaptchaTheme
          return;
       }
 
-      // Whether theme name is on of the Standard_Themes assumed we are using correct name
+      // Whether theme name is one of the Standard_Themes assumed we are using correct name
       if ( in_array($this->_recaptchaOptions['theme'], $this->_standardThemes) ) {
          unset($this->_recaptchaOptions['custom_theme_widget']);
          $js_options = json_encode($this->_recaptchaOptions);
@@ -144,8 +144,8 @@ class CaptchaTheme
     *
     * In order to use custom translation (even if it is not built in specially for a custom theme),
     * the translations must be set manually by this method or by passing the lang two letters code to
-    * instance constructor It will set translation by a lang code given and overwrites other languages
-    * set into captcha_config file.
+    * instance constructor. It will set translation by a lang code given and overwrites other languages
+    * set in captcha_config file.
     *
     * NOTE: If translate file recaptcha.lang[lang_code].php with its respective translation strings
     * within a folder i18n is not found default lang English 'en' will be used instead.
