@@ -134,7 +134,7 @@ class CaptchaTheme
                <span class="recaptcha_only_if_image">'. $this->i18n('instructions_visual') .'</span>
                <span class="recaptcha_only_if_audio">'. $this->i18n('instructions_audio') .'</span>
 
-               <input type="text" id="recaptcha_response_field" name="recaptcha_response_field" />
+               <input type="text" id="recaptcha_response_field" name="recaptcha_response_field" placeholder="'. $this->i18n('instructions_visual') .'" />
 
                <div><a href="javascript:Recaptcha.reload()">'. $this->i18n('refresh_btn') .'</a></div>
                <div class="recaptcha_only_if_image"><a href="javascript:Recaptcha.switch_type(\'audio\')">'. $this->i18n('audio_challenge') .'</a></div>
