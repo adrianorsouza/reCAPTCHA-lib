@@ -7,6 +7,12 @@ use ReCaptcha\CaptchaException;
 
 /**
  * PHP reCAPTCHA Google's API Wrapper Library for CodeIgniter
+ * This is a PHP library that handles calling reCAPTCHA widget.
+ *
+ * NOTE: before start using this library you must generate reCAPTCHA API Key
+ *          https://www.google.com/recaptcha/admin/create
+ * This library was written based on plugin version from
+ * AUTHORS: Mike Crawford, Ben Maurer -- http://recaptcha.net
  *
  * @date 2014-06-01 01:30
  * @package Libraries
@@ -15,8 +21,7 @@ use ReCaptcha\CaptchaException;
  * @link    https://github.com/adrianorsouza/codeigniter-recaptcha
  * @link    reCAPTCHA docs Reference: {@link https://developers.google.com/recaptcha/}
  * @version 0.1.0
- **/
-
+ */
 class Captcha extends CaptchaTheme
 {
    /**
@@ -24,21 +29,21 @@ class Captcha extends CaptchaTheme
     *
     * @access public
     * @var string
-    **/
+    */
    public $Version = '0.1.0';
 
    /**
     * Constant API Server (without scheme)
     *
     * @var string
-    **/
-   const RECAPTCHA_API_SERVER =  'www.google.com/recaptcha/api';
+    */
+   const RECAPTCHA_API_SERVER =  'www.google.com/recaptcha/api/';
 
    /**
     * RECAPTCHA Verify server name
     *
     * @var string
-    **/
+    */
    const RECAPTCHA_VERIFY_SERVER = 'www.google.com';
 
    /**
@@ -46,7 +51,7 @@ class Captcha extends CaptchaTheme
     *
     * @access protected
     * @var string
-    **/
+    */
    protected $_publicKey;
 
    /**
@@ -54,7 +59,7 @@ class Captcha extends CaptchaTheme
     *
     * @access protected
     * @var string
-    **/
+    */
    protected $_privateKey;
 
    /**
@@ -62,7 +67,7 @@ class Captcha extends CaptchaTheme
     *
     * @access protected
     * @var bool
-    **/
+    */
    protected $_ssl;
 
    /**
@@ -70,7 +75,7 @@ class Captcha extends CaptchaTheme
     *
     * @access protected
     * @var string
-    **/
+    */
    protected $_remoteIP = '127.0.0.1';
 
    /**
@@ -78,15 +83,15 @@ class Captcha extends CaptchaTheme
     *
     * @access public
     * @var string
-    **/
+    */
    protected $_error;
 
    /**
-    * Instance construct
+    * Instance constructor
     *
     * @param string $lang Changes the widget language
     * @return void
-    **/
+    */
    public function __construct($lang = NULL)
    {
       if ( defined('ENVIRONMENT') && defined('APPPATH') ) {
@@ -97,11 +102,11 @@ class Captcha extends CaptchaTheme
          $this->_privateKey = $CI->config->item('captcha_privateKey');
          $this->_ssl        = $CI->config->item('captcha_ssl');
 
-         // Overwrite's default options if it's set in config file
+         // Overwrite default options if it's set in config file
          if ( is_array($CI->config->item('captcha_options')) ) {
             $this->_recaptchaOptions = $CI->config->item('captcha_options');
          }
-         // Overwrite's Standard_Theme name if it's set in config file
+         // Overwrite Standard_Theme name if it's set in config file
          if ( !empty($CI->config->item('captcha_standard_theme')) ) {
             $this->_recaptchaOptions['theme'] = $CI->config->item('captcha_standard_theme');
          }
@@ -110,17 +115,24 @@ class Captcha extends CaptchaTheme
       if ( NULL !== $lang ) {
          $this->setTranslation($lang);
       }
+
+      // Stop script if API Keys is not found
+      if ( strlen($this->_publicKey == 0 || strlen($this->_privateKey) == 0 ) ) {
+         exit('To use reCAPTCHA you must get an API key from
+            <a href="https://www.google.com/recaptcha/admin/create">
+            https://www.google.com/recaptcha/admin/create</a>');
+      }
    }
 
    /**
     * Set a remote client IP
-    * Optional setter for an alternative IP address in case REMOTE_ADDR is empty,
+    * Optional setter for an alternative IP address whether REMOTE_ADDR is empty,
     * anyway default value for FALLBACK is 127.0.0.1
     * Use this setter to use a different one.
     *
     * @param string $ip_address The valid IP address
     * @return object
-    **/
+    */
    public function setRemoteIp($ip_address)
    {
       $this->_remoteIP = $ip_address;
@@ -133,9 +145,9 @@ class Captcha extends CaptchaTheme
     * Use this function to overwrite with your own message.
     *
     * @param $string $e The error message string. Optional Whether this parameter is NULL, it will retrieve
-               an error message translated by a given lang ('it' for Italian) returns 'Scorretto. Riprova.'
+               an error message translated by a given lang e.g: 'it' (for Italian) returns 'Scorretto. Riprova.'
     * @return string
-    **/
+    */
    public function setError($e = NULL)
    {
       // whether lang is set the I18n string is picked
@@ -152,7 +164,7 @@ class Captcha extends CaptchaTheme
     * @param string
     * @param strin
     * @return string
-    **/
+    */
    public function getError()
    {
       return $this->_error;
@@ -164,39 +176,33 @@ class Captcha extends CaptchaTheme
     * @param string $theme_name Optional Standard_Theme or custom theme name
     * @param array $options Optional array of reCAPTCHA options
     * @return string The reCAPTCHA widget embed HTML
-    **/
+    */
    public function displayHTML($theme_name = NULL, $options = array())
    {
-      if ($this->_publicKey === NULL || $this->_publicKey === '') {
-         exit('To use reCAPTCHA you must get an API key from https://www.google.com/recaptcha/admin/create');
-      }
-
-      $scheme = ( $this->_ssl ) ? 'https://' : 'http://';
-      $errorpart = ($this->_error) ? $errorpart = '&error=' . $this->_error : NULL;
-
+      // append a Theme
       $captcha_snippet = $this->_theme($theme_name, $options);
-      $captcha_snippet .= '<script type="text/javascript" src="'. $scheme . self::RECAPTCHA_API_SERVER . '/challenge?k=' . $this->_publicKey . $errorpart . '"></script>
+      $captcha_snippet .= '<script type="text/javascript" src="'. $this->_buildServerURI() . '"></script>
 
       <noscript>
-         <iframe src="' . $scheme . self::RECAPTCHA_API_SERVER . '/noscript?k=' . $this->_publicKey . $errorpart . '&amp;hl=' . $this->clientLang() . '" height="300" width="500" frameborder="0"></iframe><br>
+         <iframe src="' . $this->_buildServerURI('noscript') . '" height="300" width="500" frameborder="0"></iframe><br>
          <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
          <input type="hidden" name="recaptcha_response_field" value="manual_challenge">
       </noscript>';
 
       return $captcha_snippet;
-
    }
 
    /**
     * reCAPTCHA API Response
     * resolves response challenge
     *
-    * @param string $inputChallenge
-    * @param string $inputResponse
+    * @param string $inputChallenge The reCAPTCHA image input challenge data
+    * @param string $inputResponse The user reCAPTCHA input challenge data response
     * @return bool
-    **/
+    */
    public function isValid()
    {
+      // Skip without submission
       if (strtoupper($_SERVER['REQUEST_METHOD']) !== 'POST') {
 
          return FALSE;
@@ -210,9 +216,9 @@ class Captcha extends CaptchaTheme
          $captchaResponse  = isset($_POST['recaptcha_response_field'])
             ? $this->_sanitizeField($_POST['recaptcha_response_field'])
             : NULL;
-
+         // Skip empty submission
          if ( strlen($captchaChallenge) == 0 || strlen($captchaResponse) == 0 ) {
-            $this->_error = 'incorrect-captcha-sol';
+            $this->setError('incorrect-captcha-sol');
             return FALSE;
          }
 
@@ -230,7 +236,7 @@ class Captcha extends CaptchaTheme
                return TRUE;
 
             } else {
-               $this->_error = $result[1];
+               $this->setError($result[1]);
                return FALSE;
             }
          }
@@ -242,9 +248,9 @@ class Captcha extends CaptchaTheme
     * reCAPTCHA API Request
     * Post reCAPTCHA input challenge, response
     *
-    * @param array $data Array of parameters
+    * @param array $data Array of reCAPTCHA parameters
     * @return array
-    **/
+    */
    protected function _postHttpChallenge(array $data)
    {
       $httpQuery = http_build_query($data);
@@ -285,7 +291,7 @@ class Captcha extends CaptchaTheme
     * @date 2014-06-03 19:16
     * @author Adriano Rosa (http://adrianorosa.com)
     * @return string
-    **/
+    */
    private function _remoteIp()
    {
       if ( !$_SERVER['REMOTE_ADDR'] ) {
@@ -299,9 +305,31 @@ class Captcha extends CaptchaTheme
     *
     * @param string $input
     * @return string
-    **/
+    */
    private function _sanitizeField($recaptcha_input_field)
    {
       return preg_replace('/[^a-zA-Z0-9._\-+\s]/i', '', $recaptcha_input_field);
+   }
+
+   /**
+    * Build API server URI
+    *
+    * @param string $path The path whether is noscript for iframe or not
+    * @return string
+    */
+   private function _buildServerURI($path = 'challenge')
+   {
+      // Scheme
+      $uri  = ( TRUE === $this->_ssl ) ? 'https://' : 'http://';
+      // Host
+      $uri .= self::RECAPTCHA_API_SERVER;
+      // Path
+      $uri .= ($path !== 'challenge') ? 'noscript' : $path;
+      // Query
+      $uri .= '?k=' . $this->_publicKey;
+      $uri .= ($this->_error) ? '&error=' . $this->_error : NULL;
+      $uri .= ( isset($this->_recaptchaOptions['lang']) ) ? '&hl=' . $this->_recaptchaOptions['lang'] : NULL;
+
+      return $uri;
    }
 }
