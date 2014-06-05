@@ -4,9 +4,14 @@ namespace ReCaptcha;
 
 /**
  * PHP reCAPTCHA Google's API Wrapper Library for CodeIgniter
+ * This is a PHP library that handles calling reCAPTCHA widget.
  *
+ * NOTE: before start using this library you must generate reCAPTCHA API Key
+ *          https://www.google.com/recaptcha/admin/create
+ * This library was written based on plugin version from
+ * AUTHORS: Mike Crawford, Ben Maurer -- http://recaptcha.net
+
  * @date 2014-06-01 01:30
- *
  * @package Libraries
  * @author  Adriano Rosa (http://adrianorosa.com)
  * @license The MIT License (MIT), http://opensource.org/licenses/MIT
@@ -199,7 +204,7 @@ class CaptchaTheme
 
       // path/to/vendor/lib/I18n/recaptcha.lang.[langcode].php
       $path = ( NULL === $path )
-         ? dirname(__DIR__) . DIRECTORY_SEPARATOR . 'I18n' . DIRECTORY_SEPARATOR
+         ? __DIR__ . DIRECTORY_SEPARATOR . 'I18n' . DIRECTORY_SEPARATOR
          : $path;
 
       if ( file_exists( $path . 'recaptcha.lang.' . $language . '.php' ) ) {
