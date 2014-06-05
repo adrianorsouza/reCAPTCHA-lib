@@ -4,21 +4,23 @@ namespace ReCaptcha;
 
 /**
  * PHP reCAPTCHA Google's API Wrapper Library for CodeIgniter
- * This is a PHP library that handles calling reCAPTCHA widget.
+ * This is a PHP library that handles calling Google's reCAPTCHA API widget.
  *
- * NOTE: before start using this library you must generate reCAPTCHA API Key
- *          https://www.google.com/recaptcha/admin/create
+ * NOTE: before start using this library you must generate your reCAPTCHA API Key
+ *          {@link: https://www.google.com/recaptcha/admin/create}
  * This library was written based on plugin version from
  * AUTHORS: Mike Crawford, Ben Maurer -- http://recaptcha.net
-
+ *
  * @date 2014-06-01 01:30
- * @package Libraries
+ *
  * @author  Adriano Rosa (http://adrianorosa.com)
+ * @package Libraries
+ * @subpackage ReCaptcha
  * @license The MIT License (MIT), http://opensource.org/licenses/MIT
  * @link    https://github.com/adrianorsouza/codeigniter-recaptcha
  * @link    reCAPTCHA docs Reference: {@link https://developers.google.com/recaptcha/}
  * @version 0.1.0
- **/
+ */
 class CaptchaTheme
 {
    /**
@@ -95,9 +97,14 @@ class CaptchaTheme
          $this->setTranslation($this->_recaptchaOptions['lang']);
       }
 
-      // Skip to default reCAPTCHA theme if it's not set or options is not defined
-      if ( !isset($this->_recaptchaOptions['theme']) && count($this->_recaptchaOptions) == 0 ) {
+      // Skip to default reCAPTCHA theme if there is no options
+      if ( count($this->_recaptchaOptions) == 0 ) {
          return;
+      }
+
+      // Whether theme empty set default theme to default for FALLBACK
+      if ( !isset($this->_recaptchaOptions['theme']) && count($this->_recaptchaOptions) > 0 ) {
+         $this->_recaptchaOptions['theme'] = 'red';
       }
 
       // Skip to default reCAPTCHA theme if it's set to 'red' and there is no options at all
@@ -117,6 +124,11 @@ class CaptchaTheme
          // If this option is not set, we make it.
          if ( !isset($this->_recaptchaOptions['custom_theme_widget']) ) {
             $this->_recaptchaOptions['custom_theme_widget'] = 'recaptcha_widget';
+         }
+
+         // Whether there isn't lang set the user's browser is set instead
+         if ( !isset($this->_recaptchaOptions['lang']) ) {
+            $this->setTranslation($this->clientLang());
          }
 
          $custom_template = '
@@ -163,9 +175,11 @@ class CaptchaTheme
    {
       $this->_recaptchaOptions['lang'] = $language;
 
-      $custom_translations = $this->i18n(NULL, $path);
-
-      $this->_recaptchaOptions['custom_translations'] = $custom_translations;
+      if ( !in_array($this->_recaptchaOptions['lang'], $this->_builtInlang)
+         || isset($this->_recaptchaOptions['theme']) && $this->_recaptchaOptions['theme'] === 'custom' ) {
+         $custom_translations = $this->i18n(NULL, $path);
+         $this->_recaptchaOptions['custom_translations'] = $custom_translations;
+      }
 
    }
 
@@ -202,7 +216,7 @@ class CaptchaTheme
          'incorrect_try_again' => 'Incorrect, please try again.'
          );
 
-      // path/to/vendor/lib/I18n/recaptcha.lang.[langcode].php
+      // path/to/vendor/lib/ReCaptcha/I18n/recaptcha.lang.[langcode].php
       $path = ( NULL === $path )
          ? __DIR__ . DIRECTORY_SEPARATOR . 'I18n' . DIRECTORY_SEPARATOR
          : $path;
