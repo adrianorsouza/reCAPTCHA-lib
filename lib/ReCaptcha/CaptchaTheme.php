@@ -108,7 +108,7 @@ class CaptchaTheme
       }
 
       // Skip to default reCAPTCHA theme if it's set to 'red' and there is no options at all
-      if ( $this->_recaptchaOptions['theme'] === 'red' && count($this->_recaptchaOptions) == 0 ) {
+      if ( $this->_recaptchaOptions['theme'] === 'red' && count($this->_recaptchaOptions) == 1 ) {
          return;
       }
 
