@@ -126,11 +126,6 @@ class CaptchaTheme
             $this->_recaptchaOptions['custom_theme_widget'] = 'recaptcha_widget';
          }
 
-         // Whether there isn't lang set the user's browser is set instead
-         if ( !isset($this->_recaptchaOptions['lang']) ) {
-            $this->setTranslation($this->clientLang());
-         }
-
          $custom_template = '
             <div id="'. $this->_recaptchaOptions['custom_theme_widget'] .'" style="display:none">
                <div id="recaptcha_image"></div>
@@ -199,7 +194,7 @@ class CaptchaTheme
       }
 
       if ( !isset($this->_recaptchaOptions['lang']) ) {
-         $language = 'en';
+         $language = $this->clientLang();
       } else {
          $language = $this->_recaptchaOptions['lang'];
       }

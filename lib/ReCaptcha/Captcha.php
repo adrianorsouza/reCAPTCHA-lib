@@ -333,7 +333,7 @@ class Captcha extends CaptchaTheme
       // Query
       $uri .= '?k=' . $this->_publicKey;
       $uri .= ($this->_error) ? '&error=' . $this->_error : NULL;
-      $uri .= ( isset($this->_recaptchaOptions['lang']) ) ? '&hl=' . $this->_recaptchaOptions['lang'] : NULL;
+      $uri .= ( isset($this->_recaptchaOptions['lang']) ) ? '&hl=' . $this->_recaptchaOptions['lang'] : '&hl=' .$this->clientLang();
 
       return $uri;
    }
