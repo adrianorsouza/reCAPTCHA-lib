@@ -7,16 +7,18 @@ use ReCaptcha\CaptchaException;
 
 /**
  * PHP reCAPTCHA Google's API Wrapper Library for CodeIgniter
- * This is a PHP library that handles calling reCAPTCHA widget.
+ * This is a PHP library that handles calling Google's reCAPTCHA API widget.
  *
- * NOTE: before start using this library you must generate reCAPTCHA API Key
- *          https://www.google.com/recaptcha/admin/create
+ * NOTE: before start using this library you must generate your reCAPTCHA API Key
+ *          {@link: https://www.google.com/recaptcha/admin/create}
  * This library was written based on plugin version from
  * AUTHORS: Mike Crawford, Ben Maurer -- http://recaptcha.net
  *
  * @date 2014-06-01 01:30
- * @package Libraries
+ *
  * @author  Adriano Rosa (http://adrianorosa.com)
+ * @package Libraries
+ * @subpackage ReCaptcha
  * @license The MIT License (MIT), http://opensource.org/licenses/MIT
  * @link    https://github.com/adrianorsouza/codeigniter-recaptcha
  * @link    reCAPTCHA docs Reference: {@link https://developers.google.com/recaptcha/}
@@ -115,13 +117,6 @@ class Captcha extends CaptchaTheme
       if ( NULL !== $lang ) {
          $this->setTranslation($lang);
       }
-
-      // Stop script if API Keys is not found
-      if ( strlen($this->_publicKey == 0 || strlen($this->_privateKey) == 0 ) ) {
-         exit('To use reCAPTCHA you must get an API key from
-            <a href="https://www.google.com/recaptcha/admin/create">
-            https://www.google.com/recaptcha/admin/create</a>');
-      }
    }
 
    /**
@@ -175,10 +170,15 @@ class Captcha extends CaptchaTheme
     *
     * @param string $theme_name Optional Standard_Theme or custom theme name
     * @param array $options Optional array of reCAPTCHA options
+    * @throws \ReCaptcha\CaptchaException
     * @return string The reCAPTCHA widget embed HTML
     */
    public function displayHTML($theme_name = NULL, $options = array())
    {
+      if ( strlen($this->_publicKey == 0) ) {
+         throw new CaptchaException('To use reCAPTCHA you must get a Public API key from https://www.google.com/recaptcha/admin/create');
+      }
+
       // append a Theme
       $captcha_snippet = $this->_theme($theme_name, $options);
       $captcha_snippet .= '<script type="text/javascript" src="'. $this->_buildServerURI() . '"></script>
@@ -249,10 +249,15 @@ class Captcha extends CaptchaTheme
     * Post reCAPTCHA input challenge, response
     *
     * @param array $data Array of reCAPTCHA parameters
+    * @throws \ReCaptcha\CaptchaException
     * @return array
     */
    protected function _postHttpChallenge(array $data)
    {
+      if ( strlen($this->_privateKey) == 0 ) {
+         throw new CaptchaException('To use reCAPTCHA you must get a Private API key from https://www.google.com/recaptcha/admin/create');
+      }
+
       $httpQuery = http_build_query($data);
 
       $httpRequest  = "POST /recaptcha/api/verify HTTP/1.0\r\n";
@@ -266,7 +271,7 @@ class Captcha extends CaptchaTheme
       $httpResponse = '';
 
       if( false == ( $fs = @fsockopen(self::RECAPTCHA_VERIFY_SERVER, 80, $errno, $errstr, 10) ) ) {
-         exit('Could not open socket');
+         throw new CaptchaException('Could not check reCAPTCHA.');
       }
 
       fwrite($fs, $httpRequest);
