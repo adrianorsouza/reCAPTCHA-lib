@@ -6,8 +6,8 @@ use ReCaptcha\CaptchaTheme;
 use ReCaptcha\CaptchaException;
 
 /**
- * PHP reCAPTCHA Google's API Wrapper Library for CodeIgniter
- * This is a PHP library that handles calling Google's reCAPTCHA API widget.
+ * PHP Library for reCAPTCHA Google's API
+ * This is a PHP wrapper library that handles calling Google's reCAPTCHA API widget.
  *
  * NOTE: before start using this library you must generate your reCAPTCHA API Key
  *          {@link: https://www.google.com/recaptcha/admin/create}
@@ -20,38 +20,27 @@ use ReCaptcha\CaptchaException;
  * @package Libraries
  * @subpackage ReCaptcha
  * @license The MIT License (MIT), http://opensource.org/licenses/MIT
- * @link    https://github.com/adrianorsouza/codeigniter-recaptcha
- * @link    reCAPTCHA docs Reference: {@link https://developers.google.com/recaptcha/}
+ * @link    https://github.com/adrianorsouza/reCAPTCHA-lib
+ * @link    API reCAPTCHA docs Reference: {@link https://developers.google.com/recaptcha/}
  * @version 0.1.0
  */
 class Captcha extends CaptchaTheme
 {
    /**
-    * reCAPTCHA Wrapper Library Version
+    * reCAPTCHA Library Version
     *
     * @access public
     * @var string
     */
    public $Version = '0.1.0';
 
-   /**
-    * Constant API Server (without scheme)
-    *
-    * @var string
-    */
    const RECAPTCHA_API_SERVER =  'www.google.com/recaptcha/api/';
 
-   /**
-    * RECAPTCHA Verify server name
-    *
-    * @var string
-    */
    const RECAPTCHA_VERIFY_SERVER = 'www.google.com';
 
    /**
     * Public API KEY
     *
-    * @access protected
     * @var string
     */
    protected $_publicKey;
@@ -59,7 +48,6 @@ class Captcha extends CaptchaTheme
    /**
     * Private API KEY
     *
-    * @access protected
     * @var string
     */
    protected $_privateKey;
@@ -67,7 +55,6 @@ class Captcha extends CaptchaTheme
    /**
     * Enable / Disable API call via SSL
     *
-    * @access protected
     * @var bool
     */
    protected $_ssl;
@@ -75,15 +62,13 @@ class Captcha extends CaptchaTheme
    /**
     * Remote IP
     *
-    * @access protected
     * @var string
     */
    protected $_remoteIP = '127.0.0.1';
 
    /**
-    * Error Message Response
+    * Error message response
     *
-    * @access public
     * @var string
     */
    protected $_error;
@@ -92,31 +77,69 @@ class Captcha extends CaptchaTheme
     * Instance constructor
     *
     * @param string $lang Changes the widget language
+    * @param bool $https Enable using reCAPTCHA in SSL sites
     * @return void
     */
-   public function __construct($lang = NULL)
+   public function __construct($lang = NULL, $https = FALSE)
    {
-      if ( defined('ENVIRONMENT') && defined('APPPATH') ) {
-
-         $CI =& get_instance();
-         $CI->config->load('captcha_config');
-         $this->_publicKey  = $CI->config->item('captcha_publicKey');
-         $this->_privateKey = $CI->config->item('captcha_privateKey');
-         $this->_ssl        = $CI->config->item('captcha_ssl');
-
-         // Overwrite default options if it's set in config file
-         if ( is_array($CI->config->item('captcha_options')) ) {
-            $this->_recaptchaOptions = $CI->config->item('captcha_options');
-         }
-         // Overwrite Standard_Theme name if it's set in config file
-         if ( !empty($CI->config->item('captcha_standard_theme')) ) {
-            $this->_recaptchaOptions['theme'] = $CI->config->item('captcha_standard_theme');
-         }
-      }
-
       if ( NULL !== $lang ) {
          $this->setTranslation($lang);
       }
+
+      $this->_ssl = (TRUE === $https);
+   }
+
+   /**
+    * Set global reCAPTCHA options by adding an external config file
+    * these options can be set for all instances of reCAPTCHA in your
+    * app, this avoid to set options and private, public Keys all the
+    * time and individualy within your forms that has a Captcha widget.
+    *
+    * @param string $config_path The path where your config file is
+    * @return void
+    */
+   public function setConfig($config_path = NULL)
+   {
+      $CAPTCHA_CONFIG = array();
+      $path = ( NULL === $config_path )
+         ? __DIR__ . DIRECTORY_SEPARATOR . 'captcha_config.php'
+         : $config_path;
+
+      if ( file_exists($path) ) {
+
+         include_once $path;
+
+         foreach (get_class_vars(get_class($this)) as $key => $value) {
+
+            $config = preg_replace('/^[\_A-Z]/', '\\1', $key);
+
+            if ( array_key_exists($config, $CAPTCHA_CONFIG) ) {
+               $this->$key = $CAPTCHA_CONFIG[$config];
+            }
+         }
+      }
+   }
+
+   /**
+    * Set Public API KEY
+    *
+    * @param string $key
+    * @return void
+    */
+   public function setPublicKey($key)
+   {
+      $this->_publicKey = $key;
+   }
+
+   /**
+    * Set Private API KEY
+    *
+    * @param string $key
+    * @return void
+    */
+   public function setPrivateKey($key)
+   {
+      $this->_privateKey = $key;
    }
 
    /**
@@ -131,7 +154,6 @@ class Captcha extends CaptchaTheme
    public function setRemoteIp($ip_address)
    {
       $this->_remoteIP = $ip_address;
-      return $this;
    }
 
    /**
@@ -188,7 +210,7 @@ class Captcha extends CaptchaTheme
          <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
          <input type="hidden" name="recaptcha_response_field" value="manual_challenge">
       </noscript>';
-
+_vd($this);
       return $captcha_snippet;
    }
 
@@ -292,9 +314,10 @@ class Captcha extends CaptchaTheme
 
    /**
     * Get the client remote IP
+    * in order to send post to the API must have an IP
+    * set for sometimes IP is empty, so we set a FALLBACK
+    * for that.
     *
-    * @date 2014-06-03 19:16
-    * @author Adriano Rosa (http://adrianorosa.com)
     * @return string
     */
    private function _remoteIp()

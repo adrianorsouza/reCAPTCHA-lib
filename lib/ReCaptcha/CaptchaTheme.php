@@ -3,8 +3,8 @@
 namespace ReCaptcha;
 
 /**
- * PHP reCAPTCHA Google's API Wrapper Library for CodeIgniter
- * This is a PHP library that handles calling Google's reCAPTCHA API widget.
+ * PHP Library for reCAPTCHA Google's API
+ * This is a PHP wrapper library that handles calling Google's reCAPTCHA API widget.
  *
  * NOTE: before start using this library you must generate your reCAPTCHA API Key
  *          {@link: https://www.google.com/recaptcha/admin/create}
@@ -17,8 +17,8 @@ namespace ReCaptcha;
  * @package Libraries
  * @subpackage ReCaptcha
  * @license The MIT License (MIT), http://opensource.org/licenses/MIT
- * @link    https://github.com/adrianorsouza/codeigniter-recaptcha
- * @link    reCAPTCHA docs Reference: {@link https://developers.google.com/recaptcha/}
+ * @link    https://github.com/adrianorsouza/reCAPTCHA-lib
+ * @link    API reCAPTCHA docs Reference: {@link https://developers.google.com/recaptcha/}
  * @version 0.1.0
  */
 class CaptchaTheme
@@ -29,10 +29,10 @@ class CaptchaTheme
     *
     * @access protected
     * @var array
-    **/
+    */
    protected $_recaptchaOptions = array(
                'theme'               => 'red',
-               'lang'                => 'en',
+               'lang'                => null, // null means to use built-in
                'custom_translations' => null,
                'custom_theme_widget' => null,
                'tabindex'            => 0
@@ -44,15 +44,22 @@ class CaptchaTheme
     *
     * @access protected
     * @var array
-    **/
+    */
    protected $_standardThemes = array('red','white','blackglass','clean');
+
+   /**
+    * Theme JavaScript wrapper
+    *
+    * @var string
+    */
+   protected $_optionsWrapper = '<script type="text/javascript">var RecaptchaOptions = %s;</script>';
 
    /**
     * For comparison of built in i18n languages
     *
     * @access protected
     * @var array
-    **/
+    */
    protected $_builtInlang = array(
                'English'    => 'en',
                'Dutch'      => 'nl',
@@ -68,26 +75,39 @@ class CaptchaTheme
     * Standard Theme
     * Display's Theme customization for reCAPTCHA widget
     * by writting a snippet for Standard_Themes and Custom_Theming
-
-    * Custom Theme Template
-    * In order to use a custom theme, must set reCAPTCHA options correctly,
-    * also provide a custom CSS to display it properly.
-    * Fully Custom Reference: {@link: https://developers.google.com/recaptcha/docs/customization#Custom_Theming}
     *
     * @param string $theme_name Optional theme name. NOTE: overwrites the config captcha_standard_theme value
     * @param array $options reCAPTCHA Associative array of available Options. NOTE: overwrites captcha_config
     * @return string Standard_Theme | Custom_Theme | Fallback default reCAPTCHA theme
-    **/
+    */
    protected function _theme($theme_name = NULL, $options = array())
    {
-      $js_snippet = "<script type=\"text/javascript\">var RecaptchaOptions = %s;</script>";
 
       if ( count($options) > 0 ) {
-         $this->_recaptchaOptions = array_merge($this->_recaptchaOptions, $options);
+         // Avoid invalid options passed via array
+         foreach ($options as $opt => $value) {
+            if ( !array_key_exists($opt, $this->_recaptchaOptions) ) {
+               unset($options[$opt]);
+            }
+         }
       }
+
+      // Avoid empty values
+      foreach ($this->_recaptchaOptions as $key => $value) {
+         if ( NULL === $value || $value === 0 ) {
+            unset($this->_recaptchaOptions[$key]);
+         }
+      }
+
+      $this->_recaptchaOptions = array_merge($this->_recaptchaOptions, $options);
 
       if ( NULL !== $theme_name ) {
          $this->_recaptchaOptions['theme'] = $theme_name;
+      }
+
+      // Skip to default reCAPTCHA theme if there is no options
+      if ( count($this->_recaptchaOptions) == 0 ) {
+         return;
       }
 
       // Whether lang option value is not built-in try to set it from a translation file
@@ -95,11 +115,6 @@ class CaptchaTheme
             && !in_array($this->_recaptchaOptions['lang'], $this->_builtInlang)
             && !isset($this->_recaptchaOptions['custom_translations']) ) {
          $this->setTranslation($this->_recaptchaOptions['lang']);
-      }
-
-      // Skip to default reCAPTCHA theme if there is no options
-      if ( count($this->_recaptchaOptions) == 0 ) {
-         return;
       }
 
       // Whether theme empty set default theme to default for FALLBACK
@@ -112,12 +127,13 @@ class CaptchaTheme
          return;
       }
 
-      // Whether theme name is one of the Standard_Themes assumed we are using correct name
+      // Whether the theme name is Standard_Themes or not
       if ( in_array($this->_recaptchaOptions['theme'], $this->_standardThemes) ) {
+
          unset($this->_recaptchaOptions['custom_theme_widget']);
          $js_options = json_encode($this->_recaptchaOptions);
 
-         return sprintf($js_snippet, $js_options);
+         return sprintf($this->_optionsWrapper, $js_options);
 
       } elseif ( $this->_recaptchaOptions['theme'] === 'custom' ) {
          // Custom theme MUST have an option [custom_theme_widget: ID_some_widget_name] set for recaptcha
@@ -126,8 +142,30 @@ class CaptchaTheme
             $this->_recaptchaOptions['custom_theme_widget'] = 'recaptcha_widget';
          }
 
-         $custom_template = '
-            <div id="'. $this->_recaptchaOptions['custom_theme_widget'] .'" style="display:none">
+         $custom_template = $this->custom_theme($this->_recaptchaOptions['custom_theme_widget']);
+
+         $js_options = json_encode($this->_recaptchaOptions);
+         return sprintf($this->_optionsWrapper, $js_options) . $custom_template;
+
+      }
+      // FALLBACK to red one default theme
+      return;
+   }
+
+   /**
+    * Custom Theme Template
+    * In order to use a custom theme, must set reCAPTCHA options correctly,
+    * also provide a custom CSS to display it properly.
+    * Fully Custom Reference: {@link: https://developers.google.com/recaptcha/docs/customization#Custom_Theming}
+    *
+    * @access public
+    * @param string $lang
+    * @return string
+    */
+   public function custom_theme($widget_id = 'recaptcha_widget')
+   {
+      $captcha_html = '
+            <div id="'. $widget_id .'" style="display:none">
                <div id="recaptcha_image"></div>
                <div class="recaptcha_only_if_incorrect_sol" style="color:red">'. $this->i18n("incorrect_try_again") .'</div>
 
@@ -142,13 +180,7 @@ class CaptchaTheme
 
                <div><a href="javascript:Recaptcha.showhelp()">'. $this->i18n('help_btn') .'</a></div>
             </div>';
-
-         $js_options = json_encode($this->_recaptchaOptions);
-         return sprintf($js_snippet, $js_options) . $custom_template;
-
-      }
-      // FALLBACK to red one default theme
-      return;
+      return $captcha_html;
    }
 
    /**
@@ -165,7 +197,7 @@ class CaptchaTheme
     * @param string $language Two two letter language code e.g: (Italian = 'it')
     * @param string $path Optional alternative path to translate file
     * @return void
-    **/
+    */
    public function setTranslation($language = 'en', $path = NULL)
    {
       $this->_recaptchaOptions['lang'] = $language;
@@ -175,7 +207,6 @@ class CaptchaTheme
          $custom_translations = $this->i18n(NULL, $path);
          $this->_recaptchaOptions['custom_translations'] = $custom_translations;
       }
-
    }
 
    /**
@@ -184,7 +215,7 @@ class CaptchaTheme
     * @param string $key The string translated
     * @param string $path Optional path to language file
     * @return array|string
-    **/
+    */
    protected function i18n($key = NULL, $path = NULL)
    {
       static $RECAPTCHA_LANG;
@@ -228,7 +259,7 @@ class CaptchaTheme
     * Get user's browser language
     *
     * @return string
-    **/
+    */
    public function clientLang()
    {
       if ( isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ) {
