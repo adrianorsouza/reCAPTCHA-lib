@@ -1,0 +1,24 @@
+{
+    "name": "reCAPTCHA-lib/recaptcha",
+    "description": "PHP Library for reCAPTCHA Google's API",
+    "keywords": ["captcha","recaptcha", "recapcha-lib"],
+    "homepage": "https://github.com/adrianorsouza/reCAPTCHA-lib",
+
+    "license": "MIT",
+
+    "authors": [
+        {
+            "name": "Adriano Rosa",
+            "email": "dev@adrianorosa.com",
+            "homepage": "http://adrianorosa.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "ReCaptcha": "lib"
+        }
+    }
+}
