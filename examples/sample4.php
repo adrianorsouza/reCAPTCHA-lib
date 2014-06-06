@@ -13,12 +13,10 @@
    <hr>
    <?php
       try {
-         // Set Global captcha_config.php
-         $my_config = dirname(__DIR__) . '/path/to/config/captcha_config.php';
 
          $captcha = new \ReCaptcha\Captcha();
-
-         $captcha->setConfig($my_config);
+         // Set Global options by adding a captcha_config.php file
+         $captcha->setConfig( dirname(__DIR__) . '/path/to/config/captcha_config.php' );
 
          echo $captcha->displayHTML();
 

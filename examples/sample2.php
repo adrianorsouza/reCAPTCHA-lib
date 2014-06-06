@@ -14,11 +14,13 @@
    <hr>
    <?php
       try {
-
+         // set reCAPTCHA run over HTTPS
          $captcha = new \ReCaptcha\Captcha(null, true);
-
+         // set my own lang translate
+         $captcha->setTranslation('br', '/path/to/my/own/language-file/es');
+         // set my public key
          $captcha->setPublicKey('YourPublicKey');
-
+         // display options: Theme white, lang pt-BR and tabindex = 1
          echo $captcha->displayHTML('white', array('lang' => 'br', 'tabindex' => 1));
 
       } catch (ReCaptcha\CaptchaException $e) {

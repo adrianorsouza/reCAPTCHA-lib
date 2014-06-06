@@ -12,11 +12,12 @@
    <label>Username</label> <input type="text" name="username">
    <?php
       try {
-         $captcha = new \ReCaptcha\Captcha('br'); // set pt_BR language
-
-         $captcha->setPublicKey('YourPublicKey'); // set Public Key
-
-         echo $captcha->displayHTML('clean'); // set Stanrdard_Theme clean
+         // set global language to pt_BR
+         $captcha = new \ReCaptcha\Captcha('br');
+         // set your Public Key
+         $captcha->setPublicKey('YourPublicKey');
+         // disply Standard_Theme clean
+         echo $captcha->displayHTML('clean');
 
       } catch (ReCaptcha\CaptchaException $e) {
          echo ($e->errorMessage());

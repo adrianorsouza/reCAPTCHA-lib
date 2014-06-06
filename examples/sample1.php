@@ -14,12 +14,12 @@
       <?php
          try {
             $captcha = new \ReCaptcha\Captcha();
-
+            // Set your keys
             $captcha->setPublicKey('YourPublicKey');
             $captcha->setPrivateKey('YourPrivateKey');
 
             echo $captcha->displayHTML();
-
+            // throws an error if recaptcha is invalid
             if ( !$captcha->isValid() ) {
                throw new \ReCaptcha\CaptchaException($captcha->getError());
             }
