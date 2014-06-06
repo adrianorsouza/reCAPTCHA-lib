@@ -2,7 +2,7 @@
 
 // ---------------------------------------------------
 // Use this config file to set a Global configuration for reCAPTCHA
-// this file can be placed anywhere as long you say by where it is by
+// this file can be placed anywhere as long you tell where it is by
 // passing its path to the function setConfig(PATH)
 // ---------------------------------------------------
 
