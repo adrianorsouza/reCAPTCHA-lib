@@ -213,7 +213,7 @@ class CaptchaTheme
     * Fetch I18n language line
     *
     * @param string $key The string translated
-    * @param string $path Optional path to language file
+    * @param string $path Optional path to your own language file
     * @return array|string
     */
    protected function i18n($key = NULL, $path = NULL)
@@ -244,11 +244,14 @@ class CaptchaTheme
 
       // path/to/vendor/lib/ReCaptcha/I18n/recaptcha.lang.[langcode].php
       $path = ( NULL === $path )
-         ? __DIR__ . DIRECTORY_SEPARATOR . 'I18n' . DIRECTORY_SEPARATOR
+         ? __DIR__ . DIRECTORY_SEPARATOR . 'I18n'
          : $path;
 
-      if ( file_exists( $path . 'recaptcha.lang.' . $language . '.php' ) ) {
-         include_once $path . 'recaptcha.lang.' . $language . '.php';
+      $language_file = rtrim($path, '/') . DIRECTORY_SEPARATOR . 'recaptcha.lang.' . $language . '.php';
+
+      if ( file_exists( $language_file  ) ) {
+
+         include_once $language_file;
       }
 
       return isset($key) ? $RECAPTCHA_LANG[$key] : $RECAPTCHA_LANG;
