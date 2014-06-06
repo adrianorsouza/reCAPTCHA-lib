@@ -1,13 +1,4 @@
-*/config/development
-*/logs/*
-*/logs/!index.html
-*/cache/*
-*/cache/!index.html
-*/cache/!.htaccess
-
-system
 vendor
-
 .editorconfig
 *.log
 *.zip
