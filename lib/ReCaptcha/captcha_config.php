@@ -18,7 +18,7 @@ $CAPTCHA_CONFIG['recaptchaOptions'] = array(
                                        'tabindex' => 0
                                        );
 
-// Set this TRUE to avoid getting browser warnings when you use reCAPTCHA on an SSL site
+// Set this TRUE to avoid getting browser warnings when you use reCAPTCHA on SSL site
 $CAPTCHA_CONFIG['ssl'] = false;
 
 // Set Server API timeout
