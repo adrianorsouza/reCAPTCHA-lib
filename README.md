@@ -175,7 +175,7 @@ $CAPTCHA_CONFIG['recaptchaOptions'] = array(
                      'tabindex' => 0
                      );
 
-// Enable/Disable when you use reCAPTCHA on an SSL site
+// Enable/Disable when you use reCAPTCHA on SSL site
 $CAPTCHA_CONFIG['ssl'] = false;
 
 // Set Server API timeout
@@ -206,10 +206,9 @@ Even if your language is not in there, you have two options to get your widget t
 
 
 #####Create a Language File
-You might translate the widget strings by writing a file `recaptcha.lang.[lang_code].php` take a look one of within a folder `I18n` to have a reference, place it somewhere in your `dir`, then tell to the library where it is by passing its path as a second parameter to the method `Captcha::setTranslation(lang_code, path)`.
+You might translate the widget strings by writing a file `recaptcha.lang.[lang_code].php` *take a look one of them within `I18n` folder* as a reference*, place it somewhere in your `dir`, then tell to the library where it is by passing its path as a second parameter to the method `Captcha::setTranslation(lang_code, path)`.
 
-```
-PHP
+```PHP
 $myCustomLang = '/optional/path/to/file/lang'; // no need trailing slash.
 $captcha->setTranslation('fr', $myCustomLang);
 ```
