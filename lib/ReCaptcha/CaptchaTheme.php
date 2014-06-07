@@ -76,8 +76,8 @@ class CaptchaTheme
     * Display's Theme customization for reCAPTCHA widget
     * by writting a snippet for Standard_Themes and Custom_Theming
     *
-    * @param string $theme_name Optional theme name. NOTE: overwrites the config captcha_standard_theme value
-    * @param array $options reCAPTCHA Associative array of available Options. NOTE: overwrites captcha_config
+    * @param string $theme_name Optional theme name. NOTE: overwrite theme if it's set in an external config
+    * @param array $options reCAPTCHA Associative array of available options. NOTE: overwrite options set in an external config
     * @return string Standard_Theme | Custom_Theme | Fallback default reCAPTCHA theme
     */
    protected function _theme($theme_name = NULL, $options = array())
@@ -154,12 +154,12 @@ class CaptchaTheme
 
    /**
     * Custom Theme Template
-    * In order to use a custom theme, must set reCAPTCHA options correctly,
+    * In order to use a custom theme, you must set reCAPTCHA options correctly,
     * also provide a custom CSS to display it properly.
-    * Fully Custom Reference: {@link: https://developers.google.com/recaptcha/docs/customization#Custom_Theming}
+    * Fully custom theme reference: {@link: https://developers.google.com/recaptcha/docs/customization#Custom_Theming}
     *
     * @access public
-    * @param string $lang
+    * @param string $widget_id The ID name for wrapper container
     * @return string
     */
    public function custom_theme($widget_id = 'recaptcha_widget')
@@ -189,13 +189,17 @@ class CaptchaTheme
     * In order to use custom translation (even if it is not built in specially for a custom theme),
     * the translations must be set manually by this method or by passing the lang two letters code to
     * instance constructor. It will set translation by a lang code given and overwrites other languages
-    * set in captcha_config file.
+    * set in an external captcha_config file.
     *
     * NOTE: If translate file recaptcha.lang[lang_code].php with its respective translation strings
-    * within a folder i18n is not found default lang English 'en' will be used instead.
+    * within a folder i18n is not found a default lang English 'en' will be used instead.
     *
-    * @param string $language Two two letter language code e.g: (Italian = 'it')
-    * @param string $path Optional alternative path to translate file
+    * To use an external file for a custom lang translation you must create a copy of some lang file
+    * already done within the folder I18n and rename it as 'recaptcha.lang[lang_code].php'
+    * place it wherever you want and tell as second parameter its absolute $path without filename
+    *
+    * @param string $language Two letter language code e.g: (Italian = 'it')
+    * @param string $path Optional path to translate file
     * @return void
     */
    public function setTranslation($language = 'en', $path = NULL)
@@ -242,7 +246,7 @@ class CaptchaTheme
          'incorrect_try_again' => 'Incorrect, please try again.'
          );
 
-      // path/to/vendor/lib/ReCaptcha/I18n/recaptcha.lang.[langcode].php
+      // default: path/to/vendor/lib/ReCaptcha/I18n/recaptcha.lang.[langcode].php
       $path = ( NULL === $path )
          ? __DIR__ . DIRECTORY_SEPARATOR . 'I18n'
          : $path;

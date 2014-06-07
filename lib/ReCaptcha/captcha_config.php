@@ -3,7 +3,7 @@
 // ---------------------------------------------------
 // Use this config file to set a Global configuration for reCAPTCHA
 // this file can be placed anywhere as long you tell where it is by
-// passing its path to the function setConfig(PATH)
+// passing its path to the method Captcha::setConfig(PATH)
 // ---------------------------------------------------
 
 // In order to run reCAPTCHA get your KEYS at: {@link https://www.google.com/recaptcha/admin#createsite}
@@ -20,6 +20,7 @@ $CAPTCHA_CONFIG['recaptchaOptions'] = array(
 
 // Set this TRUE to avoid getting browser warnings when you use reCAPTCHA on an SSL site
 $CAPTCHA_CONFIG['ssl'] = false;
+
 // Set Server API timeout
 $CAPTCHA_CONFIG['timeout'] = 10;
 

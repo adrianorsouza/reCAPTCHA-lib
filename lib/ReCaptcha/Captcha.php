@@ -34,6 +34,11 @@ class Captcha extends CaptchaTheme
     */
    public $Version = '0.1.0';
 
+   /**
+    * Server response timeout
+    *
+    * @var integer
+    */
    public $timeout = 10;
 
    const RECAPTCHA_API_SERVER =  'www.google.com/recaptcha/api/';
@@ -94,12 +99,12 @@ class Captcha extends CaptchaTheme
    }
 
    /**
-    * Set global reCAPTCHA options by adding an external config file
+    * Set global reCAPTCHA options by loading an external config file
     * these options can be set for all instances of reCAPTCHA in your
     * app, this avoid to set options and private, public Keys all the
     * time and individualy within your forms that has a Captcha widget.
     *
-    * @param string $config_location The path where your config file is
+    * @param string $config_location The absolute path to config file
     * @throws \ReCaptcha\CaptchaException
     * @return void
     */
@@ -201,6 +206,10 @@ class Captcha extends CaptchaTheme
 
    /**
     * Create embedded widget script HTML called within form
+    *
+    * NOTE: $theme_name is used to set theme name separated instead set
+    * it within array of options available, this is to keep compatibility
+    * for newer version in future.
     *
     * @param string $theme_name Optional Standard_Theme or custom theme name
     * @param array $options Optional array of reCAPTCHA options

@@ -3,11 +3,11 @@
 namespace ReCaptcha;
 
 /**
- * PHP reCAPTCHA Google's API Wrapper Library for CodeIgniter
- * This is a PHP library that handles calling reCAPTCHA widget.
+ * PHP Library for reCAPTCHA Google's API
+ * This is a PHP wrapper library that handles calling Google's reCAPTCHA API widget.
  *
- * NOTE: before start using this library you must generate reCAPTCHA API Key
- *          https://www.google.com/recaptcha/admin/create
+ * NOTE: before start using this library you must generate your reCAPTCHA API Key
+ *          {@link: https://www.google.com/recaptcha/admin/create}
  * This library was written based on plugin version from
  * AUTHORS: Mike Crawford, Ben Maurer -- http://recaptcha.net
  *
@@ -17,14 +17,14 @@ namespace ReCaptcha;
  * @package Libraries
  * @subpackage ReCaptcha
  * @license The MIT License (MIT), http://opensource.org/licenses/MIT
- * @link    https://github.com/adrianorsouza/codeigniter-recaptcha
- * @link    reCAPTCHA docs Reference: {@link https://developers.google.com/recaptcha/}
+ * @link    https://github.com/adrianorsouza/reCAPTCHA-lib
+ * @link    API reCAPTCHA docs Reference: {@link https://developers.google.com/recaptcha/}
  * @version 0.1.0
  */
 class CaptchaException extends \Exception
 {
    /**
-    * Format error message output
+    * Prettify error message output
     * @return string
     */
    public function errorMessage()
