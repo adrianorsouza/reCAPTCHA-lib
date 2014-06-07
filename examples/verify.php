@@ -8,6 +8,9 @@ if ( strtoupper($_SERVER['REQUEST_METHOD']) === 'POST' ) {
       $captcha = new \ReCaptcha\Captcha('br'); // pt_BR language
       $captcha->setPrivateKey('YourPrivateKey');
 
+      // Optional set different timeout
+      $captcha->timeout = 100;
+
       if ( !$captcha->isValid() ) {
 
          $captcha->setError();
