@@ -26,8 +26,7 @@ $ composer require "recaptcha-lib/recaptcha:v0.1.0"
 ##Usage
 Display default options and theme.
 
-```
-PHP
+```PHP
 $captcha = new \ReCaptcha\Captcha();
 $captcha->setPublicKey('YourPublicKey');
 $captcha->setPrivateKey('YourPrivateKey');
@@ -49,11 +48,12 @@ A theme can be set by a given name e.g: `Captcha::displayHTML('clean')`.
 
 ##Options
 Custom options can be set by passing an array of values to `Captcha::displayHTML()`
-   
-	array('lang'=>'it', 'tabindex'=>2);
-
+```php
+array('lang'=>'it', 'tabindex'=>2);
+```
 Changing theme and language of the widget
 
+```php
 	$captcha->displayHTML(
 		'custom', 
 		array(
@@ -61,20 +61,23 @@ Changing theme and language of the widget
 			'custom_theme_widget'=>'my_container_id'
 		)
 	);
-
+```
 Set a language in object constructor
-
-	$captcha = new \ReCaptcha\Captcha('pt');
-
+```php
+$captcha = new \ReCaptcha\Captcha('pt');
+```
 Use reCAPTCHA over SSL site
 
-	$captcha = new \ReCaptcha\Captcha(NULL, TRUE);	
+```php
+$captcha = new \ReCaptcha\Captcha(NULL, TRUE);
+```	
+
 ###Configuration
 Set a Global configuration by creating an external file with all options and configurations to be read globally.
 
-File: `captcha_config.php`
+File: `captcha_config.php`.
 
-```
+```php
 // your KEYs
 $CAPTCHA_CONFIG['publicKey']  = '6Ldoa_YourPublicKey';
 $CAPTCHA_CONFIG['privateKey'] = '6Ldoa_YourPrivateKey';
@@ -95,13 +98,13 @@ $CAPTCHA_CONFIG['timeout'] = 10;
 
 Then pass its path to `Captcha::setConfig($path)`;
 
-	// Set Global captcha_config.php
-    $my_config = '/path/to/my/captcha_config.php';
+```php
+// Set Global captcha_config.php
+$my_config = '/path/to/my/captcha_config.php';
+$captcha = new \ReCaptcha\Captcha();
+$captcha->setConfig($my_config);
+```
 
-    $captcha = new \ReCaptcha\Captcha();
-
-    $captcha->setConfig($my_config);
-  
 ###Internationalization
 
 ###Customization
