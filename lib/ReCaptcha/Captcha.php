@@ -34,9 +34,13 @@ class Captcha extends CaptchaTheme
     */
    public $Version = '0.1.0';
 
+   public $timeout = 10;
+
    const RECAPTCHA_API_SERVER =  'www.google.com/recaptcha/api/';
 
-   const RECAPTCHA_VERIFY_SERVER = 'www.google.com';
+   const RECAPTCHA_VERIFY_SERVER = 'http://www.google.com/recaptcha/api/verify';
+
+   const RECAPTCHA_HEADER = "POST %s HTTP/1.0\r\nHost: %s \r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: %s\r\nUser-Agent: reCAPTCHA/PHP\r\n\r\n%s";
 
    /**
     * Public API KEY
@@ -216,10 +220,8 @@ class Captcha extends CaptchaTheme
 
    /**
     * reCAPTCHA API Response
-    * resolves response challenge
+    * resolves response challenge return TRUE if the answer matches
     *
-    * @param string $inputChallenge The reCAPTCHA image input challenge data
-    * @param string $inputResponse The user reCAPTCHA input challenge data response
     * @return bool
     */
    public function isValid()
@@ -253,14 +255,11 @@ class Captcha extends CaptchaTheme
 
          $result = $this->_postHttpChallenge($data);
 
-         if ( is_array($result) ) {
-            if ( $result[0] === "true") {
-               return TRUE;
+         if ( $result['isvalid'] === "true") {
+            return TRUE;
 
-            } else {
-               $this->setError($result[1]);
-               return FALSE;
-            }
+         } else {
+            $this->setError($result['error']);
          }
          return FALSE;
       }
@@ -269,6 +268,9 @@ class Captcha extends CaptchaTheme
    /**
     * reCAPTCHA API Request
     * Post reCAPTCHA input challenge, response
+    * Uses function fsockopen() and curl() as a fallback
+    * If both functions are unavailable in server configuration
+    * an {@link: \ReCaptcha\CaptchaException} exception will be thrown
     *
     * @param array $data Array of reCAPTCHA parameters
     * @throws \ReCaptcha\CaptchaException
@@ -277,39 +279,87 @@ class Captcha extends CaptchaTheme
    protected function _postHttpChallenge(array $data)
    {
       if ( strlen($this->_privateKey) == 0 ) {
-         throw new CaptchaException('To use reCAPTCHA you must get a Private API key from https://www.google.com/recaptcha/admin/create');
+         throw new CaptchaException(
+            'To use reCAPTCHA you must get a Private API key from https://www.google.com/recaptcha/admin/create'
+         );
       }
 
-      $httpQuery = http_build_query($data);
+      $responseHeader = '';
+      $result = array('isvalid'=>'false', 'error'=>'');
 
-      $httpRequest  = "POST /recaptcha/api/verify HTTP/1.0\r\n";
-      $httpRequest .= "Host: " . self::RECAPTCHA_VERIFY_SERVER . " \r\n";
-      $httpRequest .= "Content-Type: application/x-www-form-urlencoded;\r\n";
-      $httpRequest .= "Content-Length: " . strlen($httpQuery) . "\r\n";
-      $httpRequest .= "User-Agent: reCAPTCHA/PHP\r\n";
-      $httpRequest .= "\r\n";
-      $httpRequest .= $httpQuery;
+      $remote_url = parse_url(self::RECAPTCHA_VERIFY_SERVER);
+      $httpQuery  = http_build_query($data);
 
-      $httpResponse = '';
+      $requestHeader  = sprintf(
+            self::RECAPTCHA_HEADER,
+            $remote_url['path'],
+            $remote_url['host'],
+            strlen($httpQuery),
+            $httpQuery);
 
-      if( false == ( $fs = @fsockopen(self::RECAPTCHA_VERIFY_SERVER, 80, $errno, $errstr, 10) ) ) {
-         throw new CaptchaException('Could not check reCAPTCHA.');
+      if ( function_exists('fsockopen') ) {
+
+         $handler = @fsockopen($remote_url['host'], 80, $errno, $errstr, $this->timeout);
+
+         if( false == ( $handler ) ) {
+            throw new CaptchaException(
+               sprintf('Could not open sock to check reCAPTCHA at %s.', self::RECAPTCHA_VERIFY_SERVER)
+            );
+         }
+
+         stream_set_timeout($handler, $this->timeout);
+
+         fwrite($handler, $requestHeader);
+
+         $remote_response = stream_get_line($handler, 32, "\n");
+
+         if (strpos($remote_response, '200 OK') !== false) {
+
+            while (!feof($handler)) {
+               $responseHeader .= stream_get_line($handler, 356);
+            }
+            fclose($handler);
+
+            $responseHeader = str_replace("\r\n", "\n", $responseHeader);
+            $responseHeader = explode("\n\n", $responseHeader);
+            array_shift($responseHeader);
+
+            $responseHeader = explode("\n", implode("\n\n", $responseHeader));
+         }
+
+      // Fallback to CURL if fsockopen is not enabled
+      } elseif ( extension_loaded('curl') ) {
+
+         $ch = curl_init(self::RECAPTCHA_VERIFY_SERVER);
+         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $this->timeout);
+         curl_setopt($ch, CURLOPT_USERAGENT, 'reCAPTCHA/PHP');
+         curl_setopt($ch, CURLOPT_HTTPHEADER, explode("\r\n", $requestHeader) );
+         curl_setopt($ch, CURLOPT_HEADER, false);
+         curl_setopt($ch, CURLOPT_POST, true);
+         curl_setopt($ch, CURLOPT_POSTFIELDS, $httpQuery);
+
+         $responseHeader = curl_exec($ch);
+
+         curl_close($ch);
+
+         if ($responseHeader !== false) {
+
+            $responseHeader = explode("\n\n", $responseHeader);
+            $responseHeader = explode("\n", implode("\n\n", $responseHeader));
+         }
+
+      } else {
+         throw new CaptchaException(
+            sprintf('Can\'t connect to the server %s. Try again.', self::RECAPTCHA_VERIFY_SERVER )
+         );
       }
 
-      fwrite($fs, $httpRequest);
+      $result = ( count($responseHeader) == 2 )
+               ? array_combine(array_keys($result), $responseHeader)
+               : $result;
 
-      while ( !feof($fs) ) {
-         $httpResponse .= stream_get_line($fs, 1024);
-      }
-      fclose($fs);
-
-      $httpResponse = explode("\r\n\r\n", $httpResponse, 2);
-
-      if ( count($httpResponse) == 2) {
-         return explode("\n", $httpResponse[1]);
-      }
-
-      return $httpResponse;
+      return $result;
    }
 
    /**

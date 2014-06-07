@@ -20,4 +20,6 @@ $CAPTCHA_CONFIG['recaptchaOptions'] = array(
 
 // Set this TRUE to avoid getting browser warnings when you use reCAPTCHA on an SSL site
 $CAPTCHA_CONFIG['ssl'] = false;
+// Set Server API timeout
+$CAPTCHA_CONFIG['timeout'] = 10;
 
