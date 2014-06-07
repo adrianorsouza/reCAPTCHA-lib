@@ -1,5 +1,8 @@
-<?php require_once dirname(__DIR__) .'/vendor/autoload.php'; ?>
-
+<?php
+   require_once dirname(__DIR__) .'/vendor/autoload.php';
+   use ReCaptcha\Captcha;
+   use ReCaptcha\CaptchaException;
+?>
 <!doctype html>
 <html>
  <head>
@@ -12,14 +15,14 @@
    <label>Username</label> <input type="text" name="username">
    <?php
       try {
-         // set global language to pt_BR
-         $captcha = new \ReCaptcha\Captcha('br');
-         // set your Public Key
+         // set pt_BR language
+         $captcha = new Captcha();
+         // set Public Key
          $captcha->setPublicKey('YourPublicKey');
-         // disply Standard_Theme clean
+         // set Standard_Theme clean
          echo $captcha->displayHTML('clean');
 
-      } catch (ReCaptcha\CaptchaException $e) {
+      } catch (CaptchaException $e) {
          echo ($e->errorMessage());
       }
    ?>    <br>

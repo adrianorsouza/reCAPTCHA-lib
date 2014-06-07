@@ -1,5 +1,8 @@
-<?php require_once dirname(__DIR__) .'/vendor/autoload.php'; ?>
-
+<?php
+   require_once dirname(__DIR__) .'/vendor/autoload.php';
+   use ReCaptcha\Captcha;
+   use ReCaptcha\CaptchaException;
+?>
 <!doctype html>
 <html>
  <head>
@@ -14,16 +17,14 @@
    <hr>
    <?php
       try {
-         // set reCAPTCHA run over HTTPS
-         $captcha = new \ReCaptcha\Captcha(null, true);
-         // set my own lang translate
-         $captcha->setTranslation('br', '/path/to/my/own/language-file/es');
-         // set my public key
+
+         $captcha = new Captcha(null, true);
+
          $captcha->setPublicKey('YourPublicKey');
-         // display options: Theme white, lang pt-BR and tabindex = 1
+
          echo $captcha->displayHTML('white', array('lang' => 'br', 'tabindex' => 1));
 
-      } catch (ReCaptcha\CaptchaException $e) {
+      } catch (CaptchaException $e) {
          echo ($e->errorMessage());
       }
    ?> <br>

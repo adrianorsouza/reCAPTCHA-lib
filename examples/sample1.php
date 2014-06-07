@@ -1,5 +1,8 @@
-<?php require_once dirname(__DIR__) .'/vendor/autoload.php'; ?>
-
+<?php
+   require_once dirname(__DIR__) .'/vendor/autoload.php';
+   use ReCaptcha\Captcha;
+   use ReCaptcha\CaptchaException;
+?>
 <!doctype html>
 <html>
  <head>
@@ -13,18 +16,17 @@
       <hr>
       <?php
          try {
-            $captcha = new \ReCaptcha\Captcha();
-            // Set your keys
+            $captcha = new Captcha();
+
             $captcha->setPublicKey('YourPublicKey');
             $captcha->setPrivateKey('YourPrivateKey');
-
             echo $captcha->displayHTML();
-            // throws an error if recaptcha is invalid
+
             if ( !$captcha->isValid() ) {
-               throw new \ReCaptcha\CaptchaException($captcha->getError());
+               throw new CaptchaException($captcha->getError());
             }
 
-         } catch (ReCaptcha\CaptchaException $e) {
+         } catch (CaptchaException $e) {
             echo ($e->errorMessage());
          }
       ?> <br>

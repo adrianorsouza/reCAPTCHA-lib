@@ -1,27 +1,29 @@
-<?php require_once dirname(__DIR__) .'/vendor/autoload.php';
+<?php
+   require_once dirname(__DIR__) .'/vendor/autoload.php';
+   use ReCaptcha\Captcha;
+   use ReCaptcha\CaptchaException;
 
 // Verify form reCAPTCHA submission
 if ( strtoupper($_SERVER['REQUEST_METHOD']) === 'POST' ) {
    try {
       echo 'Username: ' . $_POST['username'] . '<br>';
-
-      $captcha = new \ReCaptcha\Captcha('br'); // pt_BR language
+      // pt_BR language
+      $captcha = new Captcha('br');
       $captcha->setPrivateKey('YourPrivateKey');
 
       // Optional set different timeout
-      $captcha->timeout = 100;
-
+      $captcha->timeout = 50;
       if ( !$captcha->isValid() ) {
 
          $captcha->setError();
-         throw new \ReCaptcha\CaptchaException($captcha->getError());
+         throw new CaptchaException($captcha->getError());
 
       } else {
 
-         echo '<span style="color:green">Captcha Correct!!!</span>';
+         echo '<span style="color:green">Captcha Valid!!!</span>';
       }
 
-   } catch (ReCaptcha\CaptchaException $e) {
+   } catch (CaptchaException $e) {
       echo ($e->errorMessage());
    }
 }

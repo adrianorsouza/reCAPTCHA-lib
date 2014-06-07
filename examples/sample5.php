@@ -7,10 +7,11 @@
 <html>
  <head>
      <meta charset="utf-8">
-     <title>Sample 4</title>
+     <title>Custom Sample 5</title>
  </head>
 <body>
 <div class="form">
+   <h3>Set a different Timeout for server API</h3>
 <form action="verify.php" method="post">
    <label>Username</label> <input type="text" name="username">
    <hr>
@@ -20,12 +21,11 @@
          $my_config = '/path/to/captcha_config.php';
 
          $captcha = new Captcha();
-
          $captcha->setConfig($my_config);
-
-         echo $captcha->displayHTML();
+         echo $captcha->displayHTML('custom');
 
       } catch (CaptchaException $e) {
+
          echo ($e->errorMessage());
       }
    ?>    <br>
