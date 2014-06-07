@@ -99,17 +99,25 @@ class Captcha extends CaptchaTheme
     * app, this avoid to set options and private, public Keys all the
     * time and individualy within your forms that has a Captcha widget.
     *
-    * @param string $config_path The path where your config file is
+    * @param string $config_location The path where your config file is
+    * @throws \ReCaptcha\CaptchaException
     * @return void
     */
-   public function setConfig($config_path = NULL)
+   public function setConfig($config_location = NULL)
    {
-      $CAPTCHA_CONFIG = array();
-      $path = ( NULL === $config_path )
-         ? __DIR__ . DIRECTORY_SEPARATOR . 'captcha_config.php'
-         : $config_path;
 
-      if ( file_exists($path) ) {
+      $CAPTCHA_CONFIG = array();
+      $path = ( NULL === $config_location )
+         ? __DIR__ . DIRECTORY_SEPARATOR . 'captcha_config.php'
+         : realpath($config_location);
+
+      if ( false === $path ) {
+         throw new CaptchaException(
+            sprintf("Config File not found in: %s ", $config_location)
+         );
+      }
+
+      if ( $path ) {
 
          include_once $path;
 
