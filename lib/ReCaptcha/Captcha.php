@@ -101,8 +101,8 @@ class Captcha extends CaptchaTheme
    /**
     * Set global reCAPTCHA options by loading an external config file
     * these options can be set for all instances of reCAPTCHA in your
-    * app, this avoid to set options and private, public Keys all the
-    * time and individualy within your forms that has a Captcha widget.
+    * app, this avoid to set options, private and public Keys all the
+    * time individualy within your forms that has a Captcha widget.
     *
     * @param string $config_location The absolute path to config file
     * @throws \ReCaptcha\CaptchaException
@@ -166,7 +166,7 @@ class Captcha extends CaptchaTheme
     * Use this setter to use a different one.
     *
     * @param string $ip_address The valid IP address
-    * @return object
+    * @return void
     */
    public function setRemoteIp($ip_address)
    {
@@ -180,7 +180,7 @@ class Captcha extends CaptchaTheme
     *
     * @param $string $e The error message string. Optional Whether this parameter is NULL, it will retrieve
                an error message translated by a given lang e.g: 'it' (for Italian) returns 'Scorretto. Riprova.'
-    * @return string
+    * @return void
     */
    public function setError($e = NULL)
    {
@@ -189,7 +189,6 @@ class Captcha extends CaptchaTheme
          $e = $this->i18n('incorrect_try_again');
       }
       $this->_error = $e;
-      return $this;
    }
 
    /**
@@ -197,7 +196,7 @@ class Captcha extends CaptchaTheme
     *
     * @param string
     * @param strin
-    * @return string
+    * @return void
     */
    public function getError()
    {
@@ -205,7 +204,7 @@ class Captcha extends CaptchaTheme
    }
 
    /**
-    * Create embedded widget script HTML called within form
+    * Create embedded widget script HTML called within a form
     *
     * NOTE: $theme_name is used to set theme name separated instead set
     * it within array of options available, this is to keep compatibility
@@ -236,7 +235,7 @@ class Captcha extends CaptchaTheme
    }
 
    /**
-    * reCAPTCHA API Response
+    * Verifying reCAPTCHA User's Answer
     * resolves response challenge return TRUE if the answer matches
     *
     * @return bool
