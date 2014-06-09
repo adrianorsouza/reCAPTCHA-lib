@@ -25,9 +25,19 @@ You can find this library at [Composer/Packagist](https://packagist.org/packages
 $ composer require "recaptcha-lib/recaptcha:v0.1.0"
 ```
 
-###Manually Install
+###Optional Manual Install
+If you don't use composer you'll have to download the latest [release](https://github.com/adrianorsouza/reCAPTCHA-lib/releases) of this library and unpack it within your project folder.
 
-Download the latest [release](https://github.com/adrianorsouza/reCAPTCHA-lib/releases) unpack it within your path folder.
+Once you've done it, you'll need only those files within the folder `ReCaptcha` *you can get rid of others files and samples in there, if you want to*.
+
+The reCAPTCHA Libray comes with an [Autoloader](https://github.com/adrianorsouza/reCAPTCHA-lib/blob/master/lib/ReCaptcha/CaptchaAutoloader.php) that you can include in to top of your page, using the autoloader there is no need of including files manually, see an example below:
+
+```PHP
+require_once 'ReCaptcha/CaptchaAutoloader.php';
+
+$captcha = new \ReCaptcha\Captcha();
+echo $captcha->displayHTML();
+```
 
 ##Displaying reCAPTCHA
 Display default options and theme.
