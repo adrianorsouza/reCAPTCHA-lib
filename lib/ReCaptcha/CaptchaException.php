@@ -23,13 +23,13 @@ namespace ReCaptcha;
  */
 class CaptchaException extends \Exception
 {
-   /**
-    * Prettify error message output
-    * @return string
-    */
-   public function errorMessage()
-   {
-      $errorMsg = '<span style="color:#e90f15">' . $this->getMessage() . "</span><br>\n";
-      return $errorMsg;
-   }
+	/**
+	 * Prettify error message output
+	 * @return string
+	 */
+	public function errorMessage()
+	{
+		$errorMsg = '<span style="color:#e90f15">' . $this->getMessage() . "</span><br>\n";
+		return $errorMsg;
+	}
 }
