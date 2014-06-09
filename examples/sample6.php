@@ -3,7 +3,6 @@ require_once 'vendor/autoload.php';
 use ReCaptcha\Captcha;
 use ReCaptcha\CaptchaException;
 ?>
-
 <!doctype html>
 <html>
 <head>
