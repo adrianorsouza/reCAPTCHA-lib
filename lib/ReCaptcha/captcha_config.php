@@ -13,14 +13,13 @@ $CAPTCHA_CONFIG['privateKey'] = '6Ldoa_YourPrivateKey'; // your private KEY
 // Optional: Array of reCAPTCHA options further info at:
 // {@link https://developers.google.com/recaptcha/docs/customization#Custom_Theming}
 $CAPTCHA_CONFIG['recaptchaOptions'] = array(
-                                       'theme'    => 'custom',
-                                       'lang'     => 'it',
-                                       'tabindex' => 0
-                                       );
+	'theme'    => 'custom',
+	'lang'     => 'it',
+	'tabindex' => 0
+	);
 
 // Set this TRUE to avoid getting browser warnings when you use reCAPTCHA on SSL site
 $CAPTCHA_CONFIG['ssl'] = false;
 
 // Set Server API timeout
 $CAPTCHA_CONFIG['timeout'] = 10;
-
