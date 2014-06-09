@@ -113,13 +113,13 @@ class Captcha extends CaptchaTheme
 
 		$CAPTCHA_CONFIG = array();
 		$path = ( NULL === $config_location )
-		? __DIR__ . DIRECTORY_SEPARATOR . 'captcha_config.php'
-		: realpath($config_location);
+			? __DIR__ . DIRECTORY_SEPARATOR . 'captcha_config.php'
+			: realpath($config_location);
 
 		if ( false === $path ) {
 			throw new CaptchaException(
 				sprintf("Config File not found in: %s ", $config_location)
-				);
+			);
 		}
 
 		if ( $path ) {
@@ -184,7 +184,7 @@ class Captcha extends CaptchaTheme
 	 */
 	public function setError($e = NULL)
 	{
-	  // whether lang is set the I18n string is picked
+	  	// whether lang is set the I18n string is picked
 		if ( NULL === $e ) {
 			$e = $this->i18n('incorrect_try_again');
 		}
@@ -221,7 +221,7 @@ class Captcha extends CaptchaTheme
 			throw new CaptchaException('To use reCAPTCHA you must get a Public API key from https://www.google.com/recaptcha/admin/create');
 		}
 
-	  // append a Theme
+	  	// append a Theme
 		$captcha_snippet = $this->_theme($theme_name, $options);
 		$captcha_snippet .= '<script type="text/javascript" src="'. $this->_buildServerURI() . '"></script>
 
@@ -250,12 +250,12 @@ class Captcha extends CaptchaTheme
 		} else {
 
 			$captchaChallenge = isset($_POST['recaptcha_challenge_field'])
-			? $this->_sanitizeField($_POST['recaptcha_challenge_field'])
-			: NULL;
+				? $this->_sanitizeField($_POST['recaptcha_challenge_field'])
+				: NULL;
 
 			$captchaResponse  = isset($_POST['recaptcha_response_field'])
-			? $this->_sanitizeField($_POST['recaptcha_response_field'])
-			: NULL;
+				? $this->_sanitizeField($_POST['recaptcha_response_field'])
+				: NULL;
 		 	// Skip empty submission
 			if ( strlen($captchaChallenge) == 0 || strlen($captchaResponse) == 0 ) {
 				$this->setError('incorrect-captcha-sol');
@@ -297,7 +297,7 @@ class Captcha extends CaptchaTheme
 		if ( strlen($this->_privateKey) == 0 ) {
 			throw new CaptchaException(
 				'To use reCAPTCHA you must get a Private API key from https://www.google.com/recaptcha/admin/create'
-				);
+			);
 		}
 
 		$responseHeader = '';
@@ -320,7 +320,7 @@ class Captcha extends CaptchaTheme
 			if( false == ( $handler ) ) {
 				throw new CaptchaException(
 					sprintf('Could not open sock to check reCAPTCHA at %s.', self::RECAPTCHA_VERIFY_SERVER)
-					);
+				);
 			}
 
 			stream_set_timeout($handler, $this->timeout);
@@ -368,12 +368,12 @@ class Captcha extends CaptchaTheme
 		} else {
 			throw new CaptchaException(
 				sprintf('Can\'t connect to the server %s. Try again.', self::RECAPTCHA_VERIFY_SERVER )
-				);
+			);
 		}
 
 		$result = ( count($responseHeader) == 2 )
-		? array_combine(array_keys($result), $responseHeader)
-		: $result;
+			? array_combine(array_keys($result), $responseHeader)
+			: $result;
 
 		return $result;
 	}
