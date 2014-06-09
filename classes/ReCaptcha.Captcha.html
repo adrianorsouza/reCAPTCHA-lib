@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>ReCaptcha Library</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="https://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]-->
+    <script src="https://code.jquery.com/jquery-1.11.0.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">ReCaptcha Library</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/ReCaptcha.html">\ReCaptcha</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-397812566"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-397812566" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-98944928"></a>
+                                <a href="../namespaces/ReCaptcha.html" style="margin-left: 30px; padding-left: 0">ReCaptcha</a>
+            </div>
+            <div id="namespace-98944928" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/ReCaptcha.Captcha.html">Captcha</a></li>
+                                                    <li class="class"><a href="../classes/ReCaptcha.CaptchaException.html">CaptchaException</a></li>
+                                                    <li class="class"><a href="../classes/ReCaptcha.CaptchaTheme.html">CaptchaTheme</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/ReCaptcha.html">\ReCaptcha</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\ReCaptcha</small>Captcha</h1>
+                    <p><em>PHP Library for reCAPTCHA Google&#039;s API.</em></p>
+                    <p>Captcha class that handles calling Google's reCAPTCHA API widget.</p>
+
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/ReCaptcha.CaptchaTheme.html#method_custom_theme" class="">custom_theme()</a><br />
+                                                                    <a href="../classes/ReCaptcha.CaptchaTheme.html#method_setTranslation" class="">setTranslation()</a><br />
+                                                                    <a href="../classes/ReCaptcha.CaptchaTheme.html#method_clientLang" class="">clientLang()</a><br />
+                                                                    <a href="../classes/ReCaptcha.Captcha.html#method___construct" class="">__construct()</a><br />
+                                                                    <a href="../classes/ReCaptcha.Captcha.html#method_setConfig" class="">setConfig()</a><br />
+                                                                    <a href="../classes/ReCaptcha.Captcha.html#method_setPublicKey" class="">setPublicKey()</a><br />
+                                                                    <a href="../classes/ReCaptcha.Captcha.html#method_setPrivateKey" class="">setPrivateKey()</a><br />
+                                                                    <a href="../classes/ReCaptcha.Captcha.html#method_setRemoteIp" class="">setRemoteIp()</a><br />
+                                                                    <a href="../classes/ReCaptcha.Captcha.html#method_setError" class="">setError()</a><br />
+                                                                    <a href="../classes/ReCaptcha.Captcha.html#method_getError" class="">getError()</a><br />
+                                                                    <a href="../classes/ReCaptcha.Captcha.html#method_displayHTML" class="">displayHTML()</a><br />
+                                                                    <a href="../classes/ReCaptcha.Captcha.html#method_isValid" class="">isValid()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/ReCaptcha.Captcha.html#property_Version" class="">$Version</a><br />
+                                                                    <a href="../classes/ReCaptcha.Captcha.html#property_timeout" class="">$timeout</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/ReCaptcha.Captcha.html#constant_RECAPTCHA_API_SERVER" class="">RECAPTCHA_API_SERVER</a><br />
+                                                                    <a href="../classes/ReCaptcha.Captcha.html#constant_RECAPTCHA_VERIFY_SERVER" class="">RECAPTCHA_VERIFY_SERVER</a><br />
+                                                                    <a href="../classes/ReCaptcha.Captcha.html#constant_RECAPTCHA_HEADER" class="">RECAPTCHA_HEADER</a><br />
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <a href="../classes/ReCaptcha.CaptchaTheme.html#method__theme" class="">_theme()</a><br />
+                                                                    <a href="../classes/ReCaptcha.CaptchaTheme.html#method_i18n" class="">i18n()</a><br />
+                                                                    <a href="../classes/ReCaptcha.Captcha.html#method__postHttpChallenge" class="">_postHttpChallenge()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/ReCaptcha.CaptchaTheme.html#property__recaptchaOptions" class="">$_recaptchaOptions</a><br />
+                                                                    <a href="../classes/ReCaptcha.CaptchaTheme.html#property__standardThemes" class="">$_standardThemes</a><br />
+                                                                    <a href="../classes/ReCaptcha.CaptchaTheme.html#property__optionsWrapper" class="">$_optionsWrapper</a><br />
+                                                                    <a href="../classes/ReCaptcha.CaptchaTheme.html#property__builtInlang" class="">$_builtInlang</a><br />
+                                                                    <a href="../classes/ReCaptcha.Captcha.html#property__publicKey" class="">$_publicKey</a><br />
+                                                                    <a href="../classes/ReCaptcha.Captcha.html#property__privateKey" class="">$_privateKey</a><br />
+                                                                    <a href="../classes/ReCaptcha.Captcha.html#property__ssl" class="">$_ssl</a><br />
+                                                                    <a href="../classes/ReCaptcha.Captcha.html#property__remoteIP" class="">$_remoteIP</a><br />
+                                                                    <a href="../classes/ReCaptcha.Captcha.html#property__error" class="">$_error</a><br />
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <a href="../classes/ReCaptcha.Captcha.html#method__remoteIp" class="">_remoteIp()</a><br />
+                                                                    <a href="../classes/ReCaptcha.Captcha.html#method__sanitizeField" class="">_sanitizeField()</a><br />
+                                                                    <a href="../classes/ReCaptcha.Captcha.html#method__buildServerURI" class="">_buildServerURI()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No private properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/Captcha.html"><div class="path-wrapper">Captcha.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">\ReCaptcha</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                                                                                                                                                
+                                        <div class="namespace-wrapper"><a href="../classes/ReCaptcha.CaptchaTheme.html">\ReCaptcha\CaptchaTheme</a></div>
+                                                                                                    <div class="namespace-wrapper">\ReCaptcha\Captcha</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr>
+                            <th>
+                                author
+                            </th>
+                            <td>
+                                                                    <p>Adriano Rosa <a href="http://adrianorosa.com">http://adrianorosa.com</a></p>
+                                                            </td>
+                        </tr>
+                                            <tr>
+                            <th>
+                                copyright
+                            </th>
+                            <td>
+                                                                    <p>2014 Adriano Rosa <a href="http://adrianorosa.com">http://adrianorosa.com</a></p>
+                                                            </td>
+                        </tr>
+                                            <tr>
+                            <th>
+                                throws
+                            </th>
+                            <td>
+                                                                    <p>Whether API Keys is not set.</p>
+                                                            </td>
+                        </tr>
+                                            <tr>
+                            <th>
+                                version
+                            </th>
+                            <td>
+                                                                    <p>2014</p>
+                                                            </td>
+                        </tr>
+                                        </table>
+                </aside>
+            </div>
+
+                                    <a id="constants" name="constants"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Constants</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_RECAPTCHA_API_SERVER" name="constant_RECAPTCHA_API_SERVER" class="anchor"></a>
+            <article id="constant_RECAPTCHA_API_SERVER" class="constant">
+                <h3 class="">RECAPTCHA_API_SERVER</h3>
+                <pre class="signature">RECAPTCHA_API_SERVER</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_RECAPTCHA_VERIFY_SERVER" name="constant_RECAPTCHA_VERIFY_SERVER" class="anchor"></a>
+            <article id="constant_RECAPTCHA_VERIFY_SERVER" class="constant">
+                <h3 class="">RECAPTCHA_VERIFY_SERVER</h3>
+                <pre class="signature">RECAPTCHA_VERIFY_SERVER</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_RECAPTCHA_HEADER" name="constant_RECAPTCHA_HEADER" class="anchor"></a>
+            <article id="constant_RECAPTCHA_HEADER" class="constant">
+                <h3 class="">RECAPTCHA_HEADER</h3>
+                <pre class="signature">RECAPTCHA_HEADER</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_Version" name="property_Version" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$Version</h3>
+                <pre class="signature">$Version : string</pre>
+                <p><em>reCAPTCHA Library Version</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_timeout" name="property_timeout" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$timeout</h3>
+                <pre class="signature">$timeout : integer</pre>
+                <p><em>Server response timeout</em></p>
+                
+
+                                <h4>Type</h4>
+                integer
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property__recaptchaOptions" name="property__recaptchaOptions" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$_recaptchaOptions</h3>
+                <pre class="signature">$_recaptchaOptions : array</pre>
+                <p><em>reCAPTCHA Theme default options
+RecaptchaOptions Reference: {@link: https://developers.google.com/recaptcha/docs/customization}</em></p>
+                
+
+                                <h4>Type</h4>
+                array
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/ReCaptcha.CaptchaTheme.html"><div class="path-wrapper">\ReCaptcha\CaptchaTheme</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property__standardThemes" name="property__standardThemes" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$_standardThemes</h3>
+                <pre class="signature">$_standardThemes : array</pre>
+                <p><em>List of Standard Theme names available
+Standard names Reference: {@link: https://developers.google.com/recaptcha/docs/customization#Standard_Themes}</em></p>
+                
+
+                                <h4>Type</h4>
+                array
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/ReCaptcha.CaptchaTheme.html"><div class="path-wrapper">\ReCaptcha\CaptchaTheme</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property__optionsWrapper" name="property__optionsWrapper" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$_optionsWrapper</h3>
+                <pre class="signature">$_optionsWrapper : string</pre>
+                <p><em>Theme JavaScript wrapper</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/ReCaptcha.CaptchaTheme.html"><div class="path-wrapper">\ReCaptcha\CaptchaTheme</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property__builtInlang" name="property__builtInlang" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$_builtInlang</h3>
+                <pre class="signature">$_builtInlang : array</pre>
+                <p><em>For comparison of built in i18n languages</em></p>
+                
+
+                                <h4>Type</h4>
+                array
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/ReCaptcha.CaptchaTheme.html"><div class="path-wrapper">\ReCaptcha\CaptchaTheme</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property__publicKey" name="property__publicKey" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$_publicKey</h3>
+                <pre class="signature">$_publicKey : string</pre>
+                <p><em>Public API KEY</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property__privateKey" name="property__privateKey" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$_privateKey</h3>
+                <pre class="signature">$_privateKey : string</pre>
+                <p><em>Private API KEY</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property__ssl" name="property__ssl" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$_ssl</h3>
+                <pre class="signature">$_ssl : bool</pre>
+                <p><em>Enable / Disable API call via SSL</em></p>
+                
+
+                                <h4>Type</h4>
+                bool
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property__remoteIP" name="property__remoteIP" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$_remoteIP</h3>
+                <pre class="signature">$_remoteIP : string</pre>
+                <p><em>Remote IP</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property__error" name="property__error" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$_error</h3>
+                <pre class="signature">$_error : string</pre>
+                <p><em>Error message response</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_custom_theme" name="method_custom_theme" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">custom_theme()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">custom_theme(string <span class="argument">$widget_id</span>) : string</pre>
+                <p><em>Custom Theme Template
+In order to use a custom theme, you must set reCAPTCHA options correctly,
+also provide a custom CSS to display it properly.</em></p>
+                <p>Fully custom theme reference: {@link: <a href="https://developers.google.com/recaptcha/docs/customization#Custom_Theming">https://developers.google.com/recaptcha/docs/customization#Custom_Theming</a>}</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$widget_id </td>
+                                <td><p>The ID name for wrapper container</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/ReCaptcha.CaptchaTheme.html"><div class="path-wrapper">\ReCaptcha\CaptchaTheme</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setTranslation" name="method_setTranslation" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setTranslation()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setTranslation(string <span class="argument">$language</span>, string <span class="argument">$path</span>) : void</pre>
+                <p><em>Custom Translations</em></p>
+                <p>In order to use custom translation (even if it is not built in specially for a custom theme),
+the translations must be set manually by this method or by passing the lang two letters code to
+instance constructor. It will set translation by a lang code given and overwrites other languages
+set in an external captcha_config file.</p>
+<p>NOTE: If translate file recaptcha.lang[lang_code].php with its respective translation strings
+within a folder i18n is not found a default lang English 'en' will be used instead.</p>
+<p>To use an external file for a custom lang translation you must create a copy of some lang file
+already done within the folder I18n and rename it as 'recaptcha.lang[lang_code].php'
+place it wherever you want and tell as second parameter its absolute $path without filename</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$language </td>
+                                <td><p>Two letter language code e.g: (Italian = 'it')</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$path </td>
+                                <td><p>Optional path to translate file</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/ReCaptcha.CaptchaTheme.html"><div class="path-wrapper">\ReCaptcha\CaptchaTheme</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_clientLang" name="method_clientLang" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">clientLang()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">clientLang() : string</pre>
+                <p><em>Get user&#039;s browser language preference</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/ReCaptcha.CaptchaTheme.html"><div class="path-wrapper">\ReCaptcha\CaptchaTheme</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___construct" name="method___construct" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__construct()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__construct(string <span class="argument">$lang</span>, bool <span class="argument">$https</span>) : void</pre>
+                <p><em>Instance constructor</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$lang </td>
+                                <td><p>Changes the widget language</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>bool</td>
+                                <td>$https </td>
+                                <td><p>Enable using reCAPTCHA in SSL sites</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setConfig" name="method_setConfig" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setConfig()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setConfig(string <span class="argument">$config_location</span>) : void</pre>
+                <p><em>Set global reCAPTCHA options by loading an external config file
+these options can be set for all instances of reCAPTCHA in your
+app, this avoid to set options, private and public Keys all the
+time individualy within your forms that has a Captcha widget.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$config_location </td>
+                                <td><p>The absolute path to config file</p></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\ReCaptcha\CaptchaException</dt>
+                            <dd></dd>
+                                                                    </dl>
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setPublicKey" name="method_setPublicKey" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setPublicKey()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setPublicKey(string <span class="argument">$key</span>) : void</pre>
+                <p><em>Set Public API KEY</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$key </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setPrivateKey" name="method_setPrivateKey" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setPrivateKey()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setPrivateKey(string <span class="argument">$key</span>) : void</pre>
+                <p><em>Set Private API KEY</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$key </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setRemoteIp" name="method_setRemoteIp" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setRemoteIp()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setRemoteIp(string <span class="argument">$ip_address</span>) : void</pre>
+                <p><em>Set a remote client IP
+Optional setter for an alternative IP address whether REMOTE_ADDR is empty,
+anyway default value for FALLBACK is 127.0.0.1
+Use this setter to use a different one.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$ip_address </td>
+                                <td><p>The valid IP address</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setError" name="method_setError" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setError()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setError(string <span class="argument">$e</span>) : void</pre>
+                <p><em>Set reCAPTCHA server Response error.</em></p>
+                <p>NOTE: Default string error is: incorrect-captcha-sol
+Use this function to overwrite with your own message.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$e </td>
+                                <td><p>The error message string. Optional Whether this parameter is NULL, it will retrieve</p>
+<pre><code>   an error message translated by a given lang e.g: 'it' (for Italian) returns 'Scorretto. Riprova.'</code></pre></td>
+                            </tr>
+                                            </table>
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getError" name="method_getError" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getError()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getError() : void</pre>
+                <p><em>Get reCAPTCHA server Response error</em></p>
+                
+
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_displayHTML" name="method_displayHTML" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">displayHTML()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">displayHTML(string <span class="argument">$theme_name</span>, array <span class="argument">$options</span>) : string</pre>
+                <p><em>Create embedded widget script HTML called within a form</em></p>
+                <p>NOTE: $theme_name is used to set theme name separated instead set
+it within array of options available, this is to keep compatibility
+for newer version in future.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$theme_name </td>
+                                <td><p>Optional Standard_Theme or custom theme name</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$options </td>
+                                <td><p>Optional array of reCAPTCHA options</p></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\ReCaptcha\CaptchaException</dt>
+                            <dd></dd>
+                                                                    </dl>
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>The reCAPTCHA widget embed HTML</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_isValid" name="method_isValid" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">isValid()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">isValid() : bool</pre>
+                <p><em>Verifying reCAPTCHA User&#039;s Answer
+resolves response challenge return TRUE if the answer matches</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    bool
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method__theme" name="method__theme" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">_theme()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">_theme(string <span class="argument">$theme_name</span>, array <span class="argument">$options</span>) : string</pre>
+                <p><em>Standard Theme
+Display&#039;s Theme customization for reCAPTCHA widget
+by writting a snippet for Standard_Themes and Custom_Theming</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$theme_name </td>
+                                <td><p>Optional theme name. NOTE: overwrite theme if it's set in an external config</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$options </td>
+                                <td><p>reCAPTCHA Associative array of available options. NOTE: overwrite options set in an external config</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Standard_Theme | Custom_Theme | Fallback default reCAPTCHA theme</p>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/ReCaptcha.CaptchaTheme.html"><div class="path-wrapper">\ReCaptcha\CaptchaTheme</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_i18n" name="method_i18n" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">i18n()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">i18n(string <span class="argument">$key</span>, string <span class="argument">$path</span>) : array|string</pre>
+                <p><em>Fetch I18n language line</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$key </td>
+                                <td><p>The string translated</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$path </td>
+                                <td><p>Optional path to your own language file</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array|string
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/ReCaptcha.CaptchaTheme.html"><div class="path-wrapper">\ReCaptcha\CaptchaTheme</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method__postHttpChallenge" name="method__postHttpChallenge" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">_postHttpChallenge()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">_postHttpChallenge(array <span class="argument">$data</span>) : array</pre>
+                <p><em>reCAPTCHA API Request</em></p>
+                <p>Post reCAPTCHA input challenge, response
+Uses function fsockopen() and curl() as a fallback
+If both functions are unavailable in server configuration
+an {@link \ReCaptcha\CaptchaException} exception will be thrown</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$data </td>
+                                <td><p>Array of reCAPTCHA parameters</p></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\ReCaptcha\CaptchaException</dt>
+                            <dd></dd>
+                                                                    </dl>
+                
+                                    <h4>Returns</h4>
+                    array
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method__remoteIp" name="method__remoteIp" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">_remoteIp()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">_remoteIp() : string</pre>
+                <p><em>Get the client remote IP
+in order to send post to the API must have an IP
+set for sometimes IP is empty, so we set a FALLBACK
+for that.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method__sanitizeField" name="method__sanitizeField" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">_sanitizeField()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">_sanitizeField(string <span class="argument">$recaptcha_input_field</span>) : string</pre>
+                <p><em>Sanitizes recaptcha_input_field</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$recaptcha_input_field </td>
+                                <td><p>The input string to be sanitized</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method__buildServerURI" name="method__buildServerURI" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">_buildServerURI()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">_buildServerURI(string <span class="argument">$path</span>) : string</pre>
+                <p><em>Build API server URI</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$path </td>
+                                <td><p>The path whether is noscript for iframe or not</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">Captcha.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/Captcha.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/ReCaptcha.html">\ReCaptcha</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on June 9th, 2014 at 12:47.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>
