@@ -1,35 +1,46 @@
 <?php
+/**
+ * PHP Library for reCAPTCHA Google's API
+ * This is a PHP wrapper library that handles calling Google's reCAPTCHA API widget
+ *
+ * This library abstracts all possible configurations, customization to setup and
+ * display a Google's reCAPTCHA API widget in your site or app.
+ *
+ * PHP version 5.3+
+ *
+ * NOTE:
+ * In order to use Google's reCAPTCHA widget you must generate your API Key
+ * https://www.google.com/recaptcha/admin/create.
+ *
+ * @date 2014-06-01
+ *
+ * @author  Adriano Rosa (http://adrianorosa.com)
+ * @package ReCaptcha
+ * @license http://opensource.org/licenses/MIT The MIT License (MIT)
+ * @link    https://github.com/adrianorsouza/reCAPTCHA-lib
+ * @link    https://developers.google.com/recaptcha/ reCAPTCHA API docs Reference
+ * @version 0.1.0 2014
+ */
 
 namespace ReCaptcha;
-
 use ReCaptcha\CaptchaTheme;
 use ReCaptcha\CaptchaException;
 
 /**
- * PHP Library for reCAPTCHA Google's API
- * This is a PHP wrapper library that handles calling Google's reCAPTCHA API widget.
+ * PHP Library for reCAPTCHA Google's API.
+ * Captcha class that handles calling Google's reCAPTCHA API widget.
  *
- * NOTE: before start using this library you must generate your reCAPTCHA API Key
- *          {@link: https://www.google.com/recaptcha/admin/create}
- * This library was written based on plugin version from
- * AUTHORS: Mike Crawford, Ben Maurer -- http://recaptcha.net
- *
- * @date 2014-06-01 01:30
- *
- * @author  Adriano Rosa (http://adrianorosa.com)
- * @package Libraries
- * @subpackage ReCaptcha
- * @license The MIT License (MIT), http://opensource.org/licenses/MIT
- * @link    https://github.com/adrianorsouza/reCAPTCHA-lib
- * @link    API reCAPTCHA docs Reference: {@link https://developers.google.com/recaptcha/}
- * @version 0.1.0
+ * @package ReCaptcha
+ * @author  Adriano Rosa http://adrianorosa.com
+ * @copyright 2014 Adriano Rosa http://adrianorosa.com
+ * @throws \ReCaptcha\CaptchaException Whether API Keys is not set.
+ * @version 0.1.0 2014
  */
 class Captcha extends CaptchaTheme
 {
 	/**
 	 * reCAPTCHA Library Version
 	 *
-	 * @access public
 	 * @var string
 	 */
 	public $Version = '0.1.0';
@@ -178,8 +189,8 @@ class Captcha extends CaptchaTheme
 	 * NOTE: Default string error is: incorrect-captcha-sol
 	 * Use this function to overwrite with your own message.
 	 *
-	 * @param $string $e The error message string. Optional Whether this parameter is NULL, it will retrieve
-			   an error message translated by a given lang e.g: 'it' (for Italian) returns 'Scorretto. Riprova.'
+	 * @param string $e The error message string. Optional Whether this parameter is NULL, it will retrieve
+	 *		   an error message translated by a given lang e.g: 'it' (for Italian) returns 'Scorretto. Riprova.'
 	 * @return void
 	 */
 	public function setError($e = NULL)
@@ -283,10 +294,11 @@ class Captcha extends CaptchaTheme
 
 	/**
 	 * reCAPTCHA API Request
+	 *
 	 * Post reCAPTCHA input challenge, response
 	 * Uses function fsockopen() and curl() as a fallback
 	 * If both functions are unavailable in server configuration
-	 * an {@link: \ReCaptcha\CaptchaException} exception will be thrown
+	 * an {@link \ReCaptcha\CaptchaException} exception will be thrown
 	 *
 	 * @param array $data Array of reCAPTCHA parameters
 	 * @throws \ReCaptcha\CaptchaException
@@ -397,7 +409,7 @@ class Captcha extends CaptchaTheme
 	/**
 	 * Sanitizes recaptcha_input_field
 	 *
-	 * @param string $input
+	 * @param string $recaptcha_input_field The input string to be sanitized
 	 * @return string
 	 */
 	private function _sanitizeField($recaptcha_input_field)

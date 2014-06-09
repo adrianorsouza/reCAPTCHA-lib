@@ -1,10 +1,20 @@
 <?php
-
 /**
- * Autoloader for reCAPTCHA Library
  * The use of this file is only needed if you don't use composer autoloader
  * Include this file to autoload reCAPTCHA lib classes
  *
+ * @author  Adriano Rosa (http://adrianorosa.com)
+ * @package ReCaptcha
+ * @license http://opensource.org/licenses/MIT The MIT License (MIT)
+ * @link    https://github.com/adrianorsouza/reCAPTCHA-lib
+ * @link    https://developers.google.com/recaptcha/ reCAPTCHA API docs Reference
+ * @version 0.1.0 2014
+ */
+
+/**
+ * Autoloader for reCAPTCHA Library
+ *
+ * @param $class Classname
  * @return void
  */
 function CaptchaAutoload($class)

@@ -1,25 +1,31 @@
 <?php
+/**
+ * PHP Library for reCAPTCHA Google's API
+ * This is a PHP wrapper library that handles calling Google's reCAPTCHA API widget
+ *
+ * This library abstracts all possible configurations, customization to setup and
+ * display a Google's reCAPTCHA API widget in your site or app.
+ *
+ * PHP version 5.3+
+ *
+ * NOTE:
+ * In order to use Google's reCAPTCHA widget you must generate your API Key
+ * https://www.google.com/recaptcha/admin/create.
+ *
+ * @date 2014-06-01
+ *
+ * @author  Adriano Rosa (http://adrianorosa.com)
+ * @package ReCaptcha
+ * @license http://opensource.org/licenses/MIT The MIT License (MIT)
+ * @link    https://github.com/adrianorsouza/reCAPTCHA-lib
+ * @link    https://developers.google.com/recaptcha/ reCAPTCHA API docs Reference
+ * @version 0.1.0 2014
+ */
 
 namespace ReCaptcha;
 
 /**
- * PHP Library for reCAPTCHA Google's API
- * This is a PHP wrapper library that handles calling Google's reCAPTCHA API widget.
- *
- * NOTE: before start using this library you must generate your reCAPTCHA API Key
- *          {@link: https://www.google.com/recaptcha/admin/create}
- * This library was written based on plugin version from
- * AUTHORS: Mike Crawford, Ben Maurer -- http://recaptcha.net
- *
- * @date 2014-06-01 01:30
- *
- * @author  Adriano Rosa (http://adrianorosa.com)
- * @package Libraries
- * @subpackage ReCaptcha
- * @license The MIT License (MIT), http://opensource.org/licenses/MIT
- * @link    https://github.com/adrianorsouza/reCAPTCHA-lib
- * @link    API reCAPTCHA docs Reference: {@link https://developers.google.com/recaptcha/}
- * @version 0.1.0
+ * This class represents an error returned by ReCaptcha Library
  */
 class CaptchaException extends \Exception
 {
