@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+    <title>ReCaptcha Library</title>
+    <parser>
+        <target>docs</target>
+        <extensions>
+            <extension>php</extension>
+        </extensions>
+        <visibility></visibility>
+    </parser>
+    <transformer>
+        <target>docs</target>
+    </transformer>
+    <transformations>
+        <template name="clean" />
+    </transformations>
+    <files>
+        <file>lib/**.php</file>
+        <directory>./../../lib</directory>
+        <ignore>lib/ReCaptcha/captcha_config.php</ignore>
+        <ignore>lib/ReCaptcha</ignore>
+        <ignore>lib/ReCaptcha/I18n/*</ignore>
+    </files>
+</phpdoc>
