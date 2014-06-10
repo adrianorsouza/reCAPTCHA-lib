@@ -1,6 +1,6 @@
 PHP Library for reCAPTCHA Google's API
 ==============================================
-Build status: [![Build Status](https://travis-ci.org/adrianorsouza/reCAPTCHA-lib.svg?branch=master)](https://travis-ci.org/adrianorsouza/reCAPTCHA-lib)  
+Build status: [![Build Status](https://travis-ci.org/adrianorsouza/reCAPTCHA-lib.svg?branch=master)](https://travis-ci.org/adrianorsouza/reCAPTCHA-lib)
 
 This library abstracts all possible configurations, customization to setup and display a Google's reCAPTCHA API widget in your site or app.
 
@@ -23,7 +23,7 @@ This library abstracts all possible configurations, customization to setup and d
 You can find this library at [Composer/Packagist](https://packagist.org/packages/recaptcha-lib/recaptcha).
 
 ```
-$ composer require "recaptcha-lib/recaptcha:v0.1.0"
+$ composer require "recaptcha-lib/recaptcha:v0.1.*"
 ```
 
 ###Optional Manual Install
