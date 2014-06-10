@@ -112,7 +112,6 @@ class CaptchaTest extends \PHPUnit_Framework_TestCase
 				);
 
 		$captcha = new \ReCaptcha\Captcha();
-		$captcha->setPublicKey('123ABC');
 
 		$this->invokeMethod($captcha, 'setPrivateKey', array('123ABC'));
 		$result = ( $this->invokeMethod($captcha, '_postHttpChallenge', array($data)) );
@@ -180,7 +179,6 @@ class CaptchaTest extends \PHPUnit_Framework_TestCase
 	public function invokeMethod(&$object, $methodName, array $parameters = array())
 	{
 	    $reflection = new \ReflectionClass(get_class($object));
-	    // $reflection->newInstance(array($parameters));
 	    $method = $reflection->getMethod($methodName);
 	    $method->setAccessible(true);
 
