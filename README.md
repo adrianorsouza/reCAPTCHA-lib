@@ -2,13 +2,13 @@ PHP Library for reCAPTCHA Google's API
 ==============================================
 Build status: [![Build Status](https://travis-ci.org/adrianorsouza/reCAPTCHA-lib.svg?branch=master)](https://travis-ci.org/adrianorsouza/reCAPTCHA-lib)
 
-This library abstracts all possible configurations, customization to setup and display a Google's reCAPTCHA API widget in your site or app.
+This is PHP library that handle Google's reCAPTCHA API, you can easy implement it onto your site or app and be able to set custom configurations and options to display the widget as you want.
 
 **Stable version: v0.1.0**
 
 ##Library Features
 
-- Display a reCAPTCHA widget into your form.
+- Display a reCAPTCHA widget onto your form.
 - Validate a given input value for an image Captcha and returns the result.
 - Support to different Standard Theme, Custom Theming and Template customization.
 - Internationalization support and custom language strings translation.
@@ -82,7 +82,7 @@ A theme can be set by a given name e.g: `Captcha::displayHTML('clean')`. You can
 
 *****
 
-**NOTE:** When using a `custom` theme as you can see above, the template is displayed in pure HTML so you need to provide a CSS to display a custom theme properly to your users. All elements are wrapped within a container ID default `recaptcha_widget` but you can change this ID using the option `custom_theme_widget`
+**NOTE:** When using a `custom` theme, as you can see above, the template is displayed in pure HTML so you need to provide a CSS to display a custom theme properly to your users. The widget elements are wrapped within a `div` container default ID `recaptcha_widget` but you can change this ID using the option `custom_theme_widget`
 
 ```PHP
 array('custom_theme_widget' => 'my_widget_id_name');
@@ -170,9 +170,9 @@ $captcha->timeout = 100;
 ```
 
 ####Global Config
-If you want instead of passing arrays all the time in your widget you might set a Global configuration by creating an external file with all options and configurations to be read globally.
+If you want instead of passing arrays all the time into your widget you might set a [Global configuration](https://github.com/adrianorsouza/reCAPTCHA-lib/blob/master/lib/ReCaptcha/captcha_config.php) by creating an external file with all options and configurations to be read globally.
 
-Sample File: [`captcha_config.php`](https://github.com/adrianorsouza/reCAPTCHA-lib/blob/master/lib/ReCaptcha/captcha_config.php).
+Sample File: `captcha_config.php`.
 
 ```PHP
 // your KEYs
@@ -203,7 +203,7 @@ $captcha->setConfig($my_config);
 ```
 
 ##Internationalization
-This library has two different approaches to display reCAPTCHA widget to the user's screen.
+This library has two different approaches to display reCAPTCHA widget in a different language to the user's screen.
 
 ####Built-in Language
 It's a default Google's reCAPTCHA API language translation, so the widget strings are shown according the user's browser language preference, whether user's language is not in the system built-in the English will be used instead.
@@ -211,7 +211,7 @@ It's a default Google's reCAPTCHA API language translation, so the widget string
 ####Custom language
 If you are using `Custom Theme Template` you must set a customized translation as well, despite using any **Standard Theme** that you need to display your reCAPTCHA widget in a different language which is not available in system built-in you can use your own translation strings.
 
-This library offers you a simple way to customize translation strings, within a folder [`I18n`](https://github.com/adrianorsouza/reCAPTCHA-lib/tree/master/lib/ReCaptcha/I18n) there's a few languages already translated in there. If you want to use one of them just pass the language code as first parameter to the object constructor see examples in section [options](#options) and [configuration](#configuration) above.
+This library offers you a simple way to customize translation strings, within a folder [`I18n`](https://github.com/adrianorsouza/reCAPTCHA-lib/tree/master/lib/ReCaptcha/I18n) there's a few languages already translated in there. If you want to use one of them just pass the language code as first parameter to the object constructor. See examples in section [options](#options) and [configuration](#configuration) above.
 
 Even if your language is not in there, you have two options to get your widget translated.
 
@@ -252,7 +252,7 @@ $my_options = array(
 
 
 **Collaborate**
-If you want to translate a language file and collaborate, fork this project do it and send us a pull request of it.
+If you want to translate a language file and collaborate, fork this project do it and send us a pull request.
 
 ##Theme Customization
 There are a few **Standard Theme** ready to go with, as written in [Samples](#samples), but to go any further, it's possible to style as you want by adding an option `theme=>custom` as array to config file, by parameter option or straightforward `Captcha::displayHTML('custom')`. To do so set one of these options and create a CSS to prettify it, you can checkout [demo](http://www.google.com/recaptcha/demo/custom) or see more in reCAPTCHA [Custom Theming](https://developers.google.com/recaptcha/docs/customization#Custom_Theming) Docs.
