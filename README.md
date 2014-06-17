@@ -24,7 +24,7 @@ This is PHP library that handle Google's reCAPTCHA API, you can easy implement i
 You can find this library at [Composer/Packagist](https://packagist.org/packages/recaptcha-lib/recaptcha).
 
 ```
-$ composer require "recaptcha-lib/recaptcha:v0.1.*"
+$ composer require "recaptcha-lib/recaptcha:0.1.*"
 ```
 
 ###Optional Manual Install
