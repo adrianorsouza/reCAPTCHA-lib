@@ -17,6 +17,7 @@ This is PHP library that handle Google's reCAPTCHA API, you can easy implement i
 - Individually configuration for each widget.
 - Timeout configuration for request server API.
 - Error handling.
+- Uses socket connection for API calls fallback to CURL whether the function `fsockopen` is not available.
 - Fully customization and optimization to display reCAPTCHA
 - Ease implementation
 
