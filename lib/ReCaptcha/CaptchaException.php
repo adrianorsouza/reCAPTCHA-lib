@@ -1,6 +1,6 @@
 <?php
 /**
- * PHP Library for reCAPTCHA Google's API
+ * PHP Library for reCAPTCHA Google's API v1
  * This is a PHP wrapper library that handles calling Google's reCAPTCHA API widget
  *
  * This library abstracts all possible configurations, customization to setup and

@@ -9,7 +9,7 @@ This is PHP library that handle Google's reCAPTCHA API, you can easy implement i
 
 ##Library Features
 
-- Display a reCAPTCHA widget onto your form.
+- Display a reCAPTCHA V1 widget onto your form.
 - Validate a given input value for an image Captcha and returns the result.
 - Support to different Standard Theme, Custom Theming and Template customization.
 - Internationalization support and custom language strings translation.
