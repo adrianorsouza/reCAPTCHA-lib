@@ -19,7 +19,7 @@
  * @license http://opensource.org/licenses/MIT The MIT License (MIT)
  * @link    https://github.com/adrianorsouza/reCAPTCHA-lib
  * @link    https://developers.google.com/recaptcha/ reCAPTCHA API docs Reference
- * @version 0.1.0 2014
+ * @version 0.1.1 2014
  */
 
 namespace ReCaptcha;
@@ -30,7 +30,7 @@ namespace ReCaptcha;
  *
  * @author  Adriano Rosa (http://adrianorosa.com)
  * @package ReCaptcha
- * @version 0.1.0 2014
+ * @version 0.1.1 2014
  */
 class CaptchaTheme
 {
