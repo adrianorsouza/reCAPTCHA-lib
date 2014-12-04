@@ -273,7 +273,7 @@ Adriano Rosa
 
 ###Notes
 
-In order to start using this library you must generate your reCAPTCHA's API Key from [Google's reCAPTCHA](https://www.google.com/recaptcha/admin/create) site.
+In order to start using this library you must generate your reCAPTCHA's API Key from [Google's reCAPTCHA](https://www.google.com/recaptcha/admin) site.
 
 ###License
 

@@ -229,7 +229,7 @@ class Captcha extends CaptchaTheme
 	public function displayHTML($theme_name = NULL, $options = array())
 	{
 		if ( strlen($this->_publicKey == 0) ) {
-			throw new CaptchaException('To use reCAPTCHA you must get a Public API key from https://www.google.com/recaptcha/admin/create');
+			throw new CaptchaException('To use reCAPTCHA you must get a Public API key from https://www.google.com/recaptcha/admin');
 		}
 
 	  	// append a Theme
@@ -308,7 +308,7 @@ class Captcha extends CaptchaTheme
 	{
 		if ( strlen($this->_privateKey) == 0 ) {
 			throw new CaptchaException(
-				'To use reCAPTCHA you must get a Private API key from https://www.google.com/recaptcha/admin/create'
+				'To use reCAPTCHA you must get a Private API key from https://www.google.com/recaptcha/admin'
 			);
 		}
 

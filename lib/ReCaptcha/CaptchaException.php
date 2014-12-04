@@ -10,7 +10,7 @@
  *
  * NOTE:
  * In order to use Google's reCAPTCHA widget you must generate your API Key
- * https://www.google.com/recaptcha/admin/create.
+ * https://www.google.com/recaptcha/admin.
  *
  * @date 2014-06-01
  *
