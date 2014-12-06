@@ -19,7 +19,7 @@
  * @license http://opensource.org/licenses/MIT The MIT License (MIT)
  * @link    https://github.com/adrianorsouza/reCAPTCHA-lib
  * @link    https://developers.google.com/recaptcha/ reCAPTCHA API docs Reference
- * @version 0.1.1 2014
+ * @version 0.1.2 2014
  */
 
 namespace ReCaptcha;
@@ -34,7 +34,7 @@ use ReCaptcha\CaptchaException;
  * @author  Adriano Rosa http://adrianorosa.com
  * @copyright 2014 Adriano Rosa http://adrianorosa.com
  * @throws \ReCaptcha\CaptchaException Whether API Keys is not set.
- * @version 0.1.1 2014
+ * @version 0.1.2 2014
  */
 class Captcha extends CaptchaTheme
 {
@@ -43,7 +43,7 @@ class Captcha extends CaptchaTheme
 	 *
 	 * @var string
 	 */
-	public $Version = '0.1.1';
+	public $Version = '0.1.2';
 
 	/**
 	 * Server response timeout
