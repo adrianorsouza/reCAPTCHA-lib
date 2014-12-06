@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+0.1.2 (2014-12-06)
+------------------
+* FIX setConfig lose its value when try to set an external config_file outside of scope
+
 0.1.1 (2014-12-05)
 ------------------
 * Updated information about the API version
