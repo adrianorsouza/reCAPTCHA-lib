@@ -122,7 +122,7 @@ class Captcha extends CaptchaTheme
 	public function setConfig($config_location = NULL)
 	{
 
-		$CAPTCHA_CONFIG = array();
+		static $CAPTCHA_CONFIG = array();
 		$path = ( NULL === $config_location )
 			? __DIR__ . DIRECTORY_SEPARATOR . 'captcha_config.php'
 			: realpath($config_location);
