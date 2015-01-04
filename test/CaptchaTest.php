@@ -5,7 +5,7 @@
  * @package Test
  * @author  Adriano Rosa http://adrianorosa.com
  * @license http://opensource.org/licenses/MIT The MIT License (MIT)
- * @copyright 2014 Adriano Rosa http://adrianorosa.com
+ * @copyright 2015 Adriano Rosa http://adrianorosa.com
  * @version 0.1.2
  */
 
