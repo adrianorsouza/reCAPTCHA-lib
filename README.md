@@ -77,11 +77,10 @@ A theme can be set by a given name e.g: `Captcha::displayHTML('clean')`. You can
 |`displayHTML();`|`displayHTML('white');`|`displayHTML('clean');`|`displayHTML('custom');`
 |--------- |--------- |--------- |---------
 |![image][1] |![image][2] |![image][3] |![image][4]|
-[1]: https://s3-sa-east-1.amazonaws.com/adrianorosa/github/sample1.png
-[2]: https://s3-sa-east-1.amazonaws.com/adrianorosa/github/sample2.png
-[3]: https://s3-sa-east-1.amazonaws.com/adrianorosa/github/sample3.png
-[4]: https://s3-sa-east-1.amazonaws.com/adrianorosa/github/sample4.png
-
+[1]: https://camo.githubusercontent.com/e8082d34db5f93a4baff6eb10449dd0665da6b38/68747470733a2f2f73332d73612d656173742d312e616d617a6f6e6177732e636f6d2f61647269616e6f726f73612f6769746875622f73616d706c65312e706e67
+[2]: https://camo.githubusercontent.com/17628a8721eeb10140e3e42310d6401286120351/68747470733a2f2f73332d73612d656173742d312e616d617a6f6e6177732e636f6d2f61647269616e6f726f73612f6769746875622f73616d706c65322e706e67
+[3]: https://camo.githubusercontent.com/7c78649e479e44f23190b60a59621ee9ae83c7b7/68747470733a2f2f73332d73612d656173742d312e616d617a6f6e6177732e636f6d2f61647269616e6f726f73612f6769746875622f73616d706c65332e706e67
+[4]: https://camo.githubusercontent.com/40580a2f9341db6e745d26e5b7b3ac6286d3829b/68747470733a2f2f73332d73612d656173742d312e616d617a6f6e6177732e636f6d2f61647269616e6f726f73612f6769746875622f73616d706c65342e706e67
 *****
 
 **NOTE:** When using a `custom` theme, as you can see above, the template is displayed in pure HTML so you need to provide a CSS to display a custom theme properly to your users. The widget elements are wrapped within a `div` container default ID `recaptcha_widget` but you can change this ID using the option `custom_theme_widget`
