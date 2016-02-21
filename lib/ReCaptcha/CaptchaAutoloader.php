@@ -8,7 +8,7 @@
  * @license http://opensource.org/licenses/MIT The MIT License (MIT)
  * @link    https://github.com/adrianorsouza/reCAPTCHA-lib
  * @link    https://developers.google.com/recaptcha/ reCAPTCHA API docs Reference
- * @version 0.1.2 2016
+ * @version 0.1.3 2016
  */
 
 /**
