@@ -277,6 +277,8 @@ class CaptchaTheme
 	 * Get user's browser language preference
 	 *
 	 * @return string
+	 *
+	 * @deprecated will be remove in major release v1.0.0
 	 */
 	public function clientLang()
 	{

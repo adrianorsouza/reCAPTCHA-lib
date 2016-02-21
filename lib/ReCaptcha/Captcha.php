@@ -83,6 +83,8 @@ class Captcha extends CaptchaTheme
 	 * Remote IP
 	 *
 	 * @var string
+	 * 
+	 * @deprecated will be remove in major release v1.0.0
 	 */
 	protected $_remoteIP = '127.0.0.1';
 
@@ -178,6 +180,8 @@ class Captcha extends CaptchaTheme
 	 *
 	 * @param string $ip_address The valid IP address
 	 * @return void
+	 *
+	 * @deprecated will be remove in major release v1.0.0
 	 */
 	public function setRemoteIp($ip_address)
 	{
@@ -397,6 +401,8 @@ class Captcha extends CaptchaTheme
 	 * for that.
 	 *
 	 * @return string
+	 *
+	 * @deprecated will be remove in major release v1.0.0
 	 */
 	private function _remoteIp()
 	{
@@ -411,6 +417,8 @@ class Captcha extends CaptchaTheme
 	 *
 	 * @param string $recaptcha_input_field The input string to be sanitized
 	 * @return string
+	 *
+	 * @deprecated will be remove in major release v1.0.0
 	 */
 	private function _sanitizeField($recaptcha_input_field)
 	{
@@ -422,6 +430,8 @@ class Captcha extends CaptchaTheme
 	 *
 	 * @param string $path The path whether is noscript for iframe or not
 	 * @return string
+	 *
+	 * @deprecated will be remove in major release v1.0.0
 	 */
 	private function _buildServerURI($path = 'challenge')
 	{
