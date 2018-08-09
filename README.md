@@ -77,7 +77,8 @@ A theme can be set by a given name e.g: `Captcha::displayHTML('clean')`. You can
 
 | `displayHTML();` | `displayHTML('white');` | `displayHTML('clean');` | `displayHTML('custom');`
 |------------------|-------------------------|-------------------------|---------------------------
-|![image][1] |![image][2] |![image][3] |![image][4]|
+|![image][1]       | ![image][2]             | ![image][3]             | ![image][4]               |
+
 [1]: http://adrianorsouza.github.io/reCAPTCHA-lib/images/sample1.png
 [2]: http://adrianorsouza.github.io/reCAPTCHA-lib/images/sample2.png
 [3]: http://adrianorsouza.github.io/reCAPTCHA-lib/images/sample3.png
@@ -139,13 +140,13 @@ array('lang'=>'it', 'tabindex'=>2);
 Custom theming and language of the widget
 
 ```PHP
-	$captcha->displayHTML(
-		'custom',
-		array(
-			'lang'=>'it',
-			'custom_theme_widget'=>'my_container_id'
-		)
-	);
+$captcha->displayHTML(
+	'custom',
+	array(
+		'lang'=>'it',
+		'custom_theme_widget'=>'my_container_id'
+	)
+);
 ```
 
 ## [Configuration](id:configuration)
