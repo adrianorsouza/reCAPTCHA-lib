@@ -32,7 +32,7 @@ use ReCaptcha\CaptchaException;
  *
  * @package ReCaptcha
  * @author  Adriano Rosa http://adrianorosa.com
- * @copyright 2016 Adriano Rosa http://adrianorosa.com
+ * @copyright 2018 Adriano Rosa http://adrianorosa.com
  * @throws \ReCaptcha\CaptchaException Whether API Keys is not set.
  * @version 0.1.3 2016
  */
